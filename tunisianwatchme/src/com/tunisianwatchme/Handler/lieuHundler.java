@@ -31,10 +31,6 @@ public class lieuHundler extends Thread{
         return lieuVector;
     }
 
-    public void setLieuVector(Vector lieuVector) {
-        this.lieuVector = lieuVector;
-    }
-  
         public void run() {
         try {
             HttpConnection httpConnection = (HttpConnection) Connector.open("http://localhost/tw_mobile/lieux.php?id="+this.id);
