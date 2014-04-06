@@ -21,12 +21,10 @@ import javax.microedition.io.HttpConnection;
 public class DomaineHundler extends Thread {
 
     Vector domaineVector;
-    private String URL;
     
 
     public DomaineHundler(String URL) {
         this.domaineVector = new Vector();
-        this.URL = URL;
     }
 
     public Vector getDomaineVector() {
@@ -37,7 +35,7 @@ public class DomaineHundler extends Thread {
     
     public void run() {
         try {
-            HttpConnection httpConnection = (HttpConnection) Connector.open(URL);
+            HttpConnection httpConnection = (HttpConnection) Connector.open("http://localhost/tw_mobile/domaines.php");
             KXmlParser parser = new KXmlParser();
             parser.setInput(new InputStreamReader(httpConnection.openInputStream()));
             parser.nextTag();
