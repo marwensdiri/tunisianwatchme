@@ -21,7 +21,7 @@ public class Utilisateur {
     private String prenom;
     private char sexe;
     private String adress;
-    private Date dateNaissance;
+    private String dateNaissance;
     private Image photo;
     private String path;
     private String login;
@@ -32,18 +32,7 @@ public class Utilisateur {
     public Utilisateur() {
     }
 
-    public Utilisateur(String nom, String prenom, Image photo, String login, String mdp, String mail, char type, Date dateNaissance, String path) {
-
-        this.nom = nom;
-        this.prenom = prenom;
-        this.dateNaissance = dateNaissance;
-        this.photo = photo;
-        this.login = login;
-        this.mdp = mdp;
-        this.mail = mail;
-        this.type = type;
-        this.path = path;
-    }
+   
 
     public int getId() {
         return id;
@@ -69,11 +58,11 @@ public class Utilisateur {
         this.prenom = prenom;
     }
 
-    public Date getDateNaissance() {
+    public String getDateNaissance() {
         return dateNaissance;
     }
 
-    public void setDateNaissance(Date dateNaissance) {
+    public void setDateNaissance(String dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
 
