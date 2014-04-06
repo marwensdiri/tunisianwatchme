@@ -29,8 +29,7 @@ public class CommentaireHundler extends Thread {
     public Vector getCommentaireVector() {
         return commentaireVector;
     }
-    
-        
+
     public void run() {
         try {
             HttpConnection httpConnection = (HttpConnection) Connector.open("http://localhost/tw_mobile/commentaire.php");
@@ -62,12 +61,7 @@ public class CommentaireHundler extends Thread {
             } else if (name.equals("texte")) {
                 commentaire.setTexte(text);
             } else if (name.equals("utilisateur")) {
-//                if(name.equals("nom")){
-//                    commentaire.setNom(Integer.parseInt(text));
-//                }else if(name.equals("prenom")){
-//                    commentaire.setPrenom(Integer.parseInt(text));
-//                }
-//                
+                commentaire.setTexte(text);
             } else if (name.equals("idreclamation")) {
                 commentaire.setIdReclamation(Integer.parseInt(text));
             } else if (name.equals("date")) {
