@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-
+package com.tunisianwatchme.Gui;
 
 import javax.microedition.midlet.*;
 
@@ -12,12 +12,13 @@ import javax.microedition.midlet.*;
  * @author MarwenSdiri <marwen.sdiri@esprit.tn>
  */
 public class Midlet extends MIDlet {
+
     public void startApp() {
     }
-
+    
     public void pauseApp() {
     }
-
+    
     public void destroyApp(boolean unconditional) {
     }
 }
