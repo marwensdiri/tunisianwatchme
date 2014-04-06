@@ -23,7 +23,7 @@ public class Midlet extends MIDlet {
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
-        System.out.println("************************************************" + dh.getDomaineVector().size());
+        //dh.getDomaineVector();
 
     }
 
