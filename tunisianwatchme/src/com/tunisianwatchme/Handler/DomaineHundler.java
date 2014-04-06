@@ -21,11 +21,10 @@ import javax.microedition.io.HttpConnection;
 public class DomaineHundler extends Thread {
 
     Vector domaineVector;
-    private String URL;
+    
 
     public DomaineHundler(String URL) {
         this.domaineVector = new Vector();
-        this.URL = URL;
     }
 
     public Vector getDomaineVector() {
@@ -36,15 +35,15 @@ public class DomaineHundler extends Thread {
     
     public void run() {
         try {
-            HttpConnection httpConnection = (HttpConnection) Connector.open(URL);
+            HttpConnection httpConnection = (HttpConnection) Connector.open("http://localhost/tw_mobile/domaines.php");
             KXmlParser parser = new KXmlParser();
             parser.setInput(new InputStreamReader(httpConnection.openInputStream()));
             parser.nextTag();
-            parser.require(XmlPullParser.START_TAG, null, "catalog");
+            parser.require(XmlPullParser.START_TAG, null, "domaines");
             while (parser.nextTag() != XmlPullParser.END_TAG) {
                 readXMLData(parser);
             }
-            parser.require(XmlPullParser.END_TAG, null, "catalog");
+            parser.require(XmlPullParser.END_TAG, null, "domaines");
             parser.next();
             parser.require(XmlPullParser.END_DOCUMENT, null, null);
         } catch (Exception e) {
@@ -54,13 +53,12 @@ public class DomaineHundler extends Thread {
 
     private void readXMLData(KXmlParser parser)
             throws IOException, XmlPullParserException {
-        parser.require(XmlPullParser.START_TAG, null, "title");
+        parser.require(XmlPullParser.START_TAG, null, "domaine");
         Domaine domaine = new Domaine();
         while (parser.nextTag() != XmlPullParser.END_TAG) {
             parser.require(XmlPullParser.START_TAG, null, null);
             String name = parser.getName();
             String text = parser.nextText();
-            System.out.println("<" + name + ">" + text);
             if (name.equals("id")) {
                 domaine.setId(Integer.parseInt(text));
             } else if (name.equals("nom")) {
@@ -69,7 +67,7 @@ public class DomaineHundler extends Thread {
             parser.require(XmlPullParser.END_TAG, null, name);
         }
         domaineVector.addElement(domaine);
-        parser.require(XmlPullParser.END_TAG, null, "title");
+        parser.require(XmlPullParser.END_TAG, null, "domaine");
 
     }
 }
