@@ -20,14 +20,24 @@ import javax.microedition.io.HttpConnection;
  */
 public class lieuHundler extends Thread{
     Vector lieuVector;
+    int id;
 
-    public lieuHundler(String URL) {
+    public lieuHundler(int i) {
         this.lieuVector = new Vector();
+        this.id=i;
+    }
+
+    public Vector getLieuVector() {
+        return lieuVector;
+    }
+
+    public void setLieuVector(Vector lieuVector) {
+        this.lieuVector = lieuVector;
     }
   
         public void run() {
         try {
-            HttpConnection httpConnection = (HttpConnection) Connector.open("http://localhost/tw_mobile/domaines.php");
+            HttpConnection httpConnection = (HttpConnection) Connector.open("http://localhost/tw_mobile/lieux.php?id="+this.id);
             KXmlParser parser = new KXmlParser();
             parser.setInput(new InputStreamReader(httpConnection.openInputStream()));
             parser.nextTag();
