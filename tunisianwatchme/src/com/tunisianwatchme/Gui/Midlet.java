@@ -16,7 +16,13 @@ public class Midlet extends MIDlet {
     public void startApp() {
 
         DomaineHundler dh = new DomaineHundler("http://localhost/tw_mobile/domaines.php");
+
         dh.start();
+        try {
+            dh.join();
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
         System.out.println("************************************************" + dh.getDomaineVector().size());
 
     }

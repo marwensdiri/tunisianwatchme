@@ -22,6 +22,7 @@ public class DomaineHundler extends Thread {
 
     Vector domaineVector;
     private String URL;
+    
 
     public DomaineHundler(String URL) {
         this.domaineVector = new Vector();
