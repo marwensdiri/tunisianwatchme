@@ -61,9 +61,13 @@ public class CommentaireHundler extends Thread {
                 commentaire.setId(Integer.parseInt(text));
             } else if (name.equals("texte")) {
                 commentaire.setTexte(text);
-            } else if (name.equals("idutilisateur")) {
-                
-//                commentaire.setUser(Integer.parseInt(text));
+            } else if (name.equals("utilisateur")) {
+//                if(name.equals("nom")){
+//                    commentaire.setNom(Integer.parseInt(text));
+//                }else if(name.equals("prenom")){
+//                    commentaire.setPrenom(Integer.parseInt(text));
+//                }
+//                
             } else if (name.equals("idreclamation")) {
                 commentaire.setIdReclamation(Integer.parseInt(text));
             } else if (name.equals("date")) {
