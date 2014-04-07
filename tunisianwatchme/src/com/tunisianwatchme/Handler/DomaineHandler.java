@@ -27,7 +27,7 @@ public class DomaineHandler extends DefaultHandler implements Runnable {
     private Vector DomaineVector;
     String idTag = "close";
     String nomTag = "close";
-
+    
     public DomaineHandler() {
         try {
             DomaineVector = new Vector();

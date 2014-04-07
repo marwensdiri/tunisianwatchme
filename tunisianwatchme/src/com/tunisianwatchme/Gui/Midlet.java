@@ -6,8 +6,9 @@ package com.tunisianwatchme.Gui;
  * and open the template in the editor.
  */
 
-import com.tunisianwatchme.Entity.Geolocalisation;
-import com.tunisianwatchme.Handler.GeolocalisationHandler;
+import com.tunisianwatchme.Entity.Reclamation;
+import com.tunisianwatchme.Handler.LieuHandler;
+import com.tunisianwatchme.Handler.ReclamationHandler;
 import javax.microedition.midlet.*;
 
 /**
@@ -17,12 +18,10 @@ public class Midlet extends MIDlet {
 
     public void startApp() {
 
-        /****  Test Domaine  ******/
-//        DomaineHandler dh = new DomaineHandler();
-//        System.out.println(dh.getDomaineVector());
-                /****  Test commentaire   ******/
-//        CommentaireHandler dh = new CommentaireHandler(1);
-//        System.out.println(dh.getCommentaireVector());
+        ReclamationHandler dh = new ReclamationHandler();
+        System.out.println(dh.getReclamation());
+        Reclamation rec = (Reclamation)dh.getReclamation().elementAt(0);
+        System.out.println(rec.getId());
     }
 
     public void pauseApp() {
