@@ -7,8 +7,10 @@ package com.tunisianwatchme.Gui;
  */
 
 import com.tunisianwatchme.Entity.Reclamation;
+import com.tunisianwatchme.Handler.CommentaireHandler;
 import com.tunisianwatchme.Handler.LieuHandler;
 import com.tunisianwatchme.Handler.ReclamationHandler;
+import com.tunisianwatchme.Handler.UtilisateurHandler;
 import javax.microedition.midlet.*;
 
 /**
@@ -18,10 +20,8 @@ public class Midlet extends MIDlet {
 
     public void startApp() {
 
-        ReclamationHandler dh = new ReclamationHandler();
-        System.out.println(dh.getReclamation());
-        Reclamation rec = (Reclamation)dh.getReclamation().elementAt(0);
-        System.out.println(rec.getId());
+
+        
     }
 
     public void pauseApp() {

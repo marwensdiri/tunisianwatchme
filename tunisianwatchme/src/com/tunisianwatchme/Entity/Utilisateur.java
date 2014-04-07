@@ -130,4 +130,7 @@ public class Utilisateur {
         this.path = path;
     }
 
+    public String toString() {
+        return "id: " +id+" nom: "+nom   ;
+    }
 }

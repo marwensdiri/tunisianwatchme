@@ -41,7 +41,7 @@ Vector utilisateurVector;
     String typeTag = "close";
     int  idUtilisateur ;
     
-    public UtilisateurHandler(int idReclamation) {
+    public UtilisateurHandler(int idUtilisateur) {
         try {
            this.idUtilisateur = idUtilisateur ;
             this.utilisateurVector = new Vector();
