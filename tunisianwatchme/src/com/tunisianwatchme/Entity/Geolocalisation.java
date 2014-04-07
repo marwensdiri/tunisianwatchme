@@ -12,7 +12,7 @@ package com.tunisianwatchme.Entity;
  */
 public class Geolocalisation {
     int id;
-    Reclamation reclamation;
+    int reclamation;
     double lon;
     double lat;
     
@@ -20,11 +20,11 @@ public class Geolocalisation {
         
     }
 
-    public Reclamation getReclamation() {
+    public int getReclamation() {
         return reclamation;
     }
 
-    public void setReclamation(Reclamation reclamation) {
+    public void setReclamation(int reclamation) {
         this.reclamation = reclamation;
     }
 
