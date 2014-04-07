@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.tunisianwatchme.Handler;
 
 import com.tunisianwatchme.Entity.Utilisateur;
@@ -25,7 +24,8 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author MarwenSdiri <marwen.sdiri@esprit.tn>
  */
 public class UtilisateurHandler extends DefaultHandler implements Runnable {
-Vector utilisateurVector;
+
+    Vector utilisateurVector;
     private Utilisateur currentUtilisateur;
     String idTag = "close";
     String nomTag = "close";
@@ -33,17 +33,16 @@ Vector utilisateurVector;
     String sexeTag = "close";
     String adressTag = "close";
     String dateNaissanceTag = "close";
-    String photoTag = "close";
-    String pathTag = "close";
+    //String photoTag = "close";
     String loginTag = "close";
     String mdpTag = "close";
     String mailTag = "close";
     String typeTag = "close";
-    int  idUtilisateur ;
-    
+    int idUtilisateur;
+
     public UtilisateurHandler(int idUtilisateur) {
         try {
-           this.idUtilisateur = idUtilisateur ;
+            this.idUtilisateur = idUtilisateur;
             this.utilisateurVector = new Vector();
             Thread thr = new Thread(this);
             thr.start();
@@ -65,35 +64,33 @@ Vector utilisateurVector;
             }
             currentUtilisateur = new Utilisateur();
         } else if (qName.equals("id")) {
-            idTag = "close";
+            idTag = "open";
         } else if (qName.equals("nom")) {
-            nomTag = "close";
+            nomTag = "open";
         } else if (qName.equals("prenom")) {
-            prenomTag = "close";
+            prenomTag = "open";
         } else if (qName.equals("sexe")) {
-            sexeTag = "close";
+            sexeTag = "open";
         } else if (qName.equals("adress")) {
-            adressTag = "close";
-        }else if (qName.equals("dateNaissance")) {
-            dateNaissanceTag = "close";
-        } else if (qName.equals("photo")) {
-            photoTag = "close";
-        } else if (qName.equals("path")) {
-            pathTag = "close";
-        } else if (qName.equals("login")) {
-            loginTag = "close";
+            adressTag = "open";
+        } else if (qName.equals("dateNaissance")) {
+            dateNaissanceTag = "open";
+        }/* else if (qName.equals("photo")) {
+            photoTag = "open";
+        }*/ else if (qName.equals("login")) {
+            loginTag = "open";
         } else if (qName.equals("mdp")) {
-            mdpTag = "close";
+            mdpTag = "open";
         } else if (qName.equals("mail")) {
-            mailTag = "close";
+            mailTag = "open";
         } else if (qName.equals("type")) {
-            typeTag = "close";
+            typeTag = "open";
         }
     }
-    
-     public void endElement(String uri, String localName, String qName) throws SAXException {
 
-        if (qName.equals("commentaire")) {
+    public void endElement(String uri, String localName, String qName) throws SAXException {
+
+        if (qName.equals("utilisateur")) {
             // we are no longer processing a <reg.../> tag
             utilisateurVector.addElement(currentUtilisateur);
             currentUtilisateur = null;
@@ -107,13 +104,11 @@ Vector utilisateurVector;
             sexeTag = "close";
         } else if (qName.equals("adress")) {
             adressTag = "close";
-        }else if (qName.equals("dateNaissance")) {
+        } else if (qName.equals("dateNaissance")) {
             dateNaissanceTag = "close";
-        } else if (qName.equals("photo")) {
+        }/* else if (qName.equals("photo")) {
             photoTag = "close";
-        } else if (qName.equals("path")) {
-            pathTag = "close";
-        } else if (qName.equals("login")) {
+        }*/ else if (qName.equals("login")) {
             loginTag = "close";
         } else if (qName.equals("mdp")) {
             mdpTag = "close";
@@ -124,67 +119,50 @@ Vector utilisateurVector;
         }
     }
 
-     public void characters(char[] ch, int start, int length) throws SAXException {
+    public void characters(char[] ch, int start, int length) throws SAXException {
         // we're only interested in this inside a <phone.../> tag
         if (currentUtilisateur != null) {
             // don't forget to trim excess spaces from the ends of the string
             if (idTag.equals("open")) {
                 String id = new String(ch, start, length).trim();
                 currentUtilisateur.setId(Integer.parseInt(id));
-            } else
-                if (nomTag.equals("open")) {
+            } else if (nomTag.equals("open")) {
                 String nom = new String(ch, start, length);
                 currentUtilisateur.setNom(nom);
-            }  else
-                if (prenomTag.equals("open")) {
+            } else if (prenomTag.equals("open")) {
                 String prenom = new String(ch, start, length);
                 currentUtilisateur.setPrenom(prenom);
-            }  else
-                if (sexeTag.equals("open")) {
+            } else if (sexeTag.equals("open")) {
                 String sexe = new String(ch, start, length);
                 currentUtilisateur.setSexe(sexe.charAt(0));
-            }  else
-                if (adressTag.equals("open")) {
+            } else if (adressTag.equals("open")) {
                 String adress = new String(ch, start, length);
                 currentUtilisateur.setAdress(adress);
-            } else
-                if (dateNaissanceTag.equals("open")) {
+            } else if (dateNaissanceTag.equals("open")) {
                 String dateNaissance = new String(ch, start, length);
                 currentUtilisateur.setDateNaissance(dateNaissance);
-            }  else
-//                if (photoTag.equals("open")) {
-//                String photo = new String(ch, start, length);         
-//                currentUtilisateur.setPhoto(photo);
-//            }  else
-                if (pathTag.equals("open")) {
-                String path = new String(ch, start, length);
-                currentUtilisateur.setPath(path);
-            }  else
-                if (loginTag.equals("open")) {
+            } else if (loginTag.equals("open")) {
                 String login = new String(ch, start, length);
                 currentUtilisateur.setLogin(login);
-            } else
-                if (mdpTag.equals("open")) {
+            } else if (mdpTag.equals("open")) {
                 String mdp = new String(ch, start, length);
                 currentUtilisateur.setMdp(mdp);
-            }  else
-                if (mailTag.equals("open")) {
+            } else if (mailTag.equals("open")) {
                 String mail = new String(ch, start, length);
                 currentUtilisateur.setMail(mail);
-            }  else
-                if (typeTag.equals("open")) {
+            } else if (typeTag.equals("open")) {
                 String type = new String(ch, start, length);
                 currentUtilisateur.setType(type.charAt(0));
-            } 
+            }
         }
     }
-     
+
     public void run() {
         try {
             // get a parser object
             SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
             // get an InputStream from somewhere (could be HttpConnection, for example)
-            HttpConnection hc = (HttpConnection) Connector.open("http://localhost/tw_mobile/utilisateurs.php?type=select&id="+idUtilisateur);
+            HttpConnection hc = (HttpConnection) Connector.open("http://localhost/tw_mobile/utilisateurs.php?type=select&id=" + idUtilisateur);
             DataInputStream dis = new DataInputStream(hc.openDataInputStream());
             parser.parse(dis, this);
         } catch (ParserConfigurationException ex) {
@@ -197,4 +175,3 @@ Vector utilisateurVector;
     }
 
 }
-
