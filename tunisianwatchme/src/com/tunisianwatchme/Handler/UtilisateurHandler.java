@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.Vector;
 import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
+import javax.microedition.lcdui.Image;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -132,48 +133,48 @@ Vector utilisateurVector;
                 currentUtilisateur.setId(Integer.parseInt(id));
             } else
                 if (nomTag.equals("open")) {
-                String texte = new String(ch, start, length);
-                currentUtilisateur.setNom(texte);
+                String nom = new String(ch, start, length);
+                currentUtilisateur.setNom(nom);
             }  else
                 if (prenomTag.equals("open")) {
-                String user = new String(ch, start, length);
-                currentUtilisateur.setPrenom(user);
+                String prenom = new String(ch, start, length);
+                currentUtilisateur.setPrenom(prenom);
             }  else
                 if (sexeTag.equals("open")) {
-                String date = new String(ch, start, length);
-                currentUtilisateur.setSexe(date);
+                String sexe = new String(ch, start, length);
+                currentUtilisateur.setSexe(sexe.charAt(0));
             }  else
                 if (adressTag.equals("open")) {
-                String idReclamation = new String(ch, start, length);
-                currentUtilisateur.setAdress(idReclamation);
+                String adress = new String(ch, start, length);
+                currentUtilisateur.setAdress(adress);
             } else
                 if (dateNaissanceTag.equals("open")) {
-                String texte = new String(ch, start, length);
-                currentUtilisateur.setDateNaissance(texte);
+                String dateNaissance = new String(ch, start, length);
+                currentUtilisateur.setDateNaissance(dateNaissance);
             }  else
-                if (photoTag.equals("open")) {
-                String user = new String(ch, start, length);
-                currentUtilisateur.setPhoto(user);
-            }  else
+//                if (photoTag.equals("open")) {
+//                String photo = new String(ch, start, length);         
+//                currentUtilisateur.setPhoto(photo);
+//            }  else
                 if (pathTag.equals("open")) {
-                String date = new String(ch, start, length);
-                currentUtilisateur.setPath(date);
+                String path = new String(ch, start, length);
+                currentUtilisateur.setPath(path);
             }  else
                 if (loginTag.equals("open")) {
-                String idReclamation = new String(ch, start, length);
-                currentUtilisateur.setLogin(idReclamation);
+                String login = new String(ch, start, length);
+                currentUtilisateur.setLogin(login);
             } else
                 if (mdpTag.equals("open")) {
-                String user = new String(ch, start, length);
-                currentUtilisateur.setMdp(user);
+                String mdp = new String(ch, start, length);
+                currentUtilisateur.setMdp(mdp);
             }  else
                 if (mailTag.equals("open")) {
-                String date = new String(ch, start, length);
-                currentUtilisateur.setMail(date);
+                String mail = new String(ch, start, length);
+                currentUtilisateur.setMail(mail);
             }  else
                 if (typeTag.equals("open")) {
-                String idReclamation = new String(ch, start, length);
-                currentUtilisateur.setType(idReclamation);
+                String type = new String(ch, start, length);
+                currentUtilisateur.setType(type.charAt(0));
             } 
         }
     }

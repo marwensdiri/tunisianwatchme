@@ -7,7 +7,6 @@
 package com.tunisianwatchme.Entity;
 
 
-import java.util.Date;
 import javax.microedition.lcdui.Image;
 
 /**

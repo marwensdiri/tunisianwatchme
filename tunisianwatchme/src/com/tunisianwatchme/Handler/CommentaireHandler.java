@@ -6,6 +6,8 @@
 package com.tunisianwatchme.Handler;
 
 import com.tunisianwatchme.Entity.Commentaire;
+import com.tunisianwatchme.Entity.Reclamation;
+import com.tunisianwatchme.Entity.Utilisateur;
 
 
 import java.io.*;
@@ -105,7 +107,9 @@ public class CommentaireHandler extends DefaultHandler implements Runnable{
             }  else
                 if (userTag.equals("open")) {
                 String user = new String(ch, start, length);
-                currentCommentaire.setUser(user);
+                Utilisateur utilisateur = new Utilisateur();
+                utilisateur.setNom(user);
+                currentCommentaire.setUser(utilisateur);
             }  else
                 if (daterTag.equals("open")) {
                 String date = new String(ch, start, length);
@@ -113,7 +117,8 @@ public class CommentaireHandler extends DefaultHandler implements Runnable{
             }  else
                 if (idReclamationTag.equals("open")) {
                 String idReclamation = new String(ch, start, length);
-                currentCommentaire.setIdReclamation(idReclamation);
+                Reclamation rec = new Reclamation();
+                currentCommentaire.setIdReclamation(Integer.parseInt( idReclamation));
             } 
         }
     }
