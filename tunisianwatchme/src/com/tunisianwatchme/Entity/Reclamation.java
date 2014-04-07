@@ -8,7 +8,7 @@ public class Reclamation {
 
     private int id;
     private Lieu lieu;
-    private Geolocalisation geolocalisation;
+    private int idgeolocalisation;
     private String date;
     private String heure;
     private String description;
@@ -52,12 +52,12 @@ public class Reclamation {
         listEvaluation.removeElement(ev);
     }
 
-    public Geolocalisation getGeolocalisation() {
-        return geolocalisation;
+    public int getidGeolocalisation() {
+        return idgeolocalisation;
     }
 
-    public void setGeolocalisation(Geolocalisation geolocalisation) {
-        this.geolocalisation = geolocalisation;
+    public void setidGeolocalisation(int geolocalisation) {
+        this.idgeolocalisation = geolocalisation;
     }
 
     

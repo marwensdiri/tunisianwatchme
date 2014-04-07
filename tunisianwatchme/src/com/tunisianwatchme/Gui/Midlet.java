@@ -5,7 +5,8 @@ package com.tunisianwatchme.Gui;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.tunisianwatchme.Handler.DomaineHundler;
+
+import com.tunisianwatchme.Handler.DomaineHandler;
 import javax.microedition.midlet.*;
 
 /**
@@ -15,16 +16,8 @@ public class Midlet extends MIDlet {
 
     public void startApp() {
 
-        DomaineHundler dh = new DomaineHundler("http://localhost/tw_mobile/domaines.php");
-
-        dh.start();
-        try {
-            dh.join();
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
-        //dh.getDomaineVector();
-
+        DomaineHandler dh = new DomaineHandler();
+        System.out.println(dh.getDomaineVector());
     }
 
     public void pauseApp() {
