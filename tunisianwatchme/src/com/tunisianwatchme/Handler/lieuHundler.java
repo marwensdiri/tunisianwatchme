@@ -6,8 +6,7 @@
 
 package com.tunisianwatchme.Handler;
 import com.tunisianwatchme.Entity.Lieu;
-import org.kxml2.io.*;
-import org.xmlpull.v1.*;
+
 
 import java.io.*;
 import java.util.Vector;
