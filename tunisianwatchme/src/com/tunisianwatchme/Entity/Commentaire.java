@@ -69,4 +69,7 @@ public class Commentaire {
         this.idReclamation = idReclamation;
     }
 
+    public String toString() {
+        return "id: " +id+" texte: "+texte   ;
+    }
 }
