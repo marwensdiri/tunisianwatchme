@@ -63,6 +63,12 @@ public class CommentaireHandler extends DefaultHandler implements Runnable{
             idTag = "open";
         } else if (qName.equals("texte")) {
             texteTag = "open";
+        }  else if (qName.equals("date")) {
+            daterTag = "close";
+        } else if (qName.equals("user")) {
+            userTag = "close";
+        } else if (qName.equals("idReclamation")) {
+            idReclamationTag = "close";
         }
     }
     
@@ -76,11 +82,11 @@ public class CommentaireHandler extends DefaultHandler implements Runnable{
             idTag = "close";
         } else if (qName.equals("texte")) {
             texteTag = "close";
-        } else if (qName.equals("texte")) {
+        } else if (qName.equals("date")) {
             daterTag = "close";
-        } else if (qName.equals("texte")) {
+        } else if (qName.equals("user")) {
             userTag = "close";
-        } else if (qName.equals("texte")) {
+        } else if (qName.equals("idReclamation")) {
             idReclamationTag = "close";
         }
     }
@@ -99,15 +105,15 @@ public class CommentaireHandler extends DefaultHandler implements Runnable{
             }  else
                 if (userTag.equals("open")) {
                 String user = new String(ch, start, length);
-                currentCommentaire.setTexte(user);
+                currentCommentaire.setUser(user);
             }  else
                 if (daterTag.equals("open")) {
                 String date = new String(ch, start, length);
-                currentCommentaire.setTexte(date);
+                currentCommentaire.setDate(date);
             }  else
                 if (idReclamationTag.equals("open")) {
                 String idReclamation = new String(ch, start, length);
-                currentCommentaire.setTexte(idReclamation);
+                currentCommentaire.setIdReclamation(idReclamation);
             } 
         }
     }
