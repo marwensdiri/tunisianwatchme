@@ -7,14 +7,14 @@ public class Commentaire {
     private int id;
     private String texte;
     private Utilisateur user;
-    private Date date;
+    private String date;
     private int idReclamation;
 
     public Commentaire() {
 
     }
 
-    public Commentaire(int id, String texte, Utilisateur user, Date date, int idReclamation) {
+    public Commentaire(int id, String texte, Utilisateur user, String date, int idReclamation) {
         this.id = id;
         this.texte = texte;
         this.user = user;
@@ -22,7 +22,7 @@ public class Commentaire {
         this.idReclamation = idReclamation;
     }
 
-    public Commentaire(String texte, Utilisateur user, Date date, int idReclamation) {
+    public Commentaire(String texte, Utilisateur user, String date, int idReclamation) {
         this.texte = texte;
         this.user = user;
         this.date = date;
@@ -41,7 +41,7 @@ public class Commentaire {
         return user;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -61,7 +61,7 @@ public class Commentaire {
         this.user = user;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
