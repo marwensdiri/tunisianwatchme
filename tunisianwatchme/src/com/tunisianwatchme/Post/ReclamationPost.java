@@ -5,7 +5,7 @@
  */
 package com.tunisianwatchme.Post;
 
-import com.tunisianwatchme.Entity.Geolocalisation;
+import com.tunisianwatchme.Entity.Reclamation;
 import java.io.DataInputStream;
 import java.io.IOException;
 import javax.microedition.io.Connector;
@@ -15,19 +15,25 @@ import javax.microedition.io.HttpConnection;
  *
  * @author asd
  */
-public class GeolocalisationPost extends Thread {
-    
-    private Geolocalisation geolocalisation;
+public class ReclamationPost extends Thread {
 
-    public GeolocalisationPost(Geolocalisation geolocalisation) {
-        this.geolocalisation = geolocalisation;
+    private Reclamation reclamation;
+    private int type;
+
+    public ReclamationPost(Reclamation reclamation, int type) {
+        this.reclamation = reclamation;
+        this.type = type;
     }
 
     public void run() {
         HttpConnection hc;
         DataInputStream dc;
         StringBuffer str = new StringBuffer("");
-        String url = "http://localhost/tw_mobile/geolocalisations.php?type=add&lon=" + geolocalisation.getLon() + "&lat=" + geolocalisation.getLat();
+         String url = "";
+        if(type == 1)
+            url = "http://localhost/tw_mobile/reclamations.php?type=add&titre="+reclamation.getTitre()+"&description="+reclamation.getDescription()+"&idcitoyen="+reclamation.getCitoyen().getId()+"&date="+reclamation.getDate()+"&heure="+reclamation.getHeure()+"&etat=0&idlieu="+reclamation.getLieu().getId()+"&iddomaine="+reclamation.getDomaine().getId();
+          //  if()
+       // else if(type == 2)
         try {
             hc = (HttpConnection) Connector.open(url);
             dc = new DataInputStream(hc.openInputStream());
