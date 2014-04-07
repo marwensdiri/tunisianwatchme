@@ -7,7 +7,7 @@
 package com.tunisianwatchme.Gui;
 
 import javax.microedition.midlet.*;
-import com.tunisianwatchme.Handler.lieuHundler;
+import com.tunisianwatchme.Handler.LieuHandler;
 
 
 /**
@@ -16,7 +16,7 @@ import com.tunisianwatchme.Handler.lieuHundler;
 public class testLieuHundler extends MIDlet {
     int id;
     public void startApp() {
-        lieuHundler dh=new lieuHundler(5);
+        LieuHandler dh=new LieuHandler(5);
 
         dh.start();
         try {

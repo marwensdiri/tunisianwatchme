@@ -11,11 +11,11 @@ import java.util.Vector;
  *
  * @author Khadija
  */
-public class lieuHundler extends Thread{
+public class LieuHandler extends Thread{
     Vector lieuVector;
     int id;
 
-    public lieuHundler(int i) {
+    public LieuHandler(int i) {
         this.lieuVector = new Vector();
         this.id=i;
     }

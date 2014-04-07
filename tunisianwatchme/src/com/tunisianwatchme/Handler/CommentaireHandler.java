@@ -24,13 +24,17 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  * @author Khadija
  */
+
 public class CommentaireHandler extends DefaultHandler implements Runnable{
 
     Vector commentaireVector;
     private Commentaire currentCommentaire;
     String idTag = "close";
-    String nomTag = "close";
-    String prenTag = "close";
+    String texteTag = "close";
+    String userTag = "close";
+    String daterTag = "close";
+    String idReclamationTag = "close";
+    
     
     public CommentaireHandler(String URL) {
         try {
@@ -57,7 +61,7 @@ public class CommentaireHandler extends DefaultHandler implements Runnable{
         } else if (qName.equals("id")) {
             idTag = "open";
         } else if (qName.equals("texte")) {
-            nomTag = "open";
+            texteTag = "open";
         }
     }
     
@@ -70,7 +74,13 @@ public class CommentaireHandler extends DefaultHandler implements Runnable{
         } else if (qName.equals("id")) {
             idTag = "close";
         } else if (qName.equals("texte")) {
-            nomTag = "close";
+            texteTag = "close";
+        } else if (qName.equals("texte")) {
+            daterTag = "close";
+        } else if (qName.equals("texte")) {
+            userTag = "close";
+        } else if (qName.equals("texte")) {
+            idReclamationTag = "close";
         }
     }
 
@@ -82,9 +92,21 @@ public class CommentaireHandler extends DefaultHandler implements Runnable{
                 String id = new String(ch, start, length).trim();
                 currentCommentaire.setId(Integer.parseInt(id));
             } else
-                if (nomTag.equals("open")) {
+                if (texteTag.equals("open")) {
                 String texte = new String(ch, start, length);
                 currentCommentaire.setTexte(texte);
+            }  else
+                if (userTag.equals("open")) {
+                String user = new String(ch, start, length);
+                currentCommentaire.setTexte(user);
+            }  else
+                if (daterTag.equals("open")) {
+                String date = new String(ch, start, length);
+                currentCommentaire.setTexte(date);
+            }  else
+                if (idReclamationTag.equals("open")) {
+                String idReclamation = new String(ch, start, length);
+                currentCommentaire.setTexte(idReclamation);
             } 
         }
     }
