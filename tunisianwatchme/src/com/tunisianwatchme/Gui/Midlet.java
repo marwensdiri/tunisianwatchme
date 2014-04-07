@@ -6,6 +6,7 @@ package com.tunisianwatchme.Gui;
  * and open the template in the editor.
  */
 
+import com.tunisianwatchme.Handler.CommentaireHandler;
 import com.tunisianwatchme.Handler.DomaineHandler;
 import javax.microedition.midlet.*;
 
@@ -18,6 +19,8 @@ public class Midlet extends MIDlet {
 
         DomaineHandler dh = new DomaineHandler();
         System.out.println(dh.getDomaineVector());
+//        CommentaireHandler dh = new CommentaireHandler(null);
+//        System.out.println(dh.getCommentaireVector());
     }
 
     public void pauseApp() {
