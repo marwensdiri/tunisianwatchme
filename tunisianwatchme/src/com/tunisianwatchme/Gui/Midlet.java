@@ -17,9 +17,11 @@ public class Midlet extends MIDlet {
 
     public void startApp() {
 
-        DomaineHandler dh = new DomaineHandler();
-        System.out.println(dh.getDomaineVector());
-//        CommentaireHandler dh = new CommentaireHandler(null);
+        /****  Test Domaine  ******/
+//        DomaineHandler dh = new DomaineHandler();
+//        System.out.println(dh.getDomaineVector());
+                /****  Test commentaire   ******/
+//        CommentaireHandler dh = new CommentaireHandler(1);
 //        System.out.println(dh.getCommentaireVector());
     }
 

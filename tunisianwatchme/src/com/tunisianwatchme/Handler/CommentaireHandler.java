@@ -33,10 +33,11 @@ public class CommentaireHandler extends DefaultHandler implements Runnable{
     String userTag = "close";
     String daterTag = "close";
     String idReclamationTag = "close";
+    int  idReclamation ;
     
-    
-    public CommentaireHandler(String URL) {
+    public CommentaireHandler(int idReclamation) {
         try {
+            this.idReclamation = idReclamation ;
             this.commentaireVector = new Vector();
             Thread thr = new Thread(this);
             thr.start();
@@ -115,7 +116,7 @@ public class CommentaireHandler extends DefaultHandler implements Runnable{
             // get a parser object
             SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
             // get an InputStream from somewhere (could be HttpConnection, for example)
-            HttpConnection hc = (HttpConnection) Connector.open("http://localhost/tw_mobile/commentaires.php");
+            HttpConnection hc = (HttpConnection) Connector.open("http://localhost/tw_mobile/commentaires.php?type=select&id="+idReclamation);
             DataInputStream dis = new DataInputStream(hc.openDataInputStream());
             parser.parse(dis, this);
         } catch (ParserConfigurationException ex) {
