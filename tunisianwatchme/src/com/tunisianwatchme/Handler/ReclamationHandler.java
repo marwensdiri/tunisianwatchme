@@ -5,7 +5,9 @@
  */
 package com.tunisianwatchme.Handler;
 
+import com.tunisianwatchme.Entity.Commentaire;
 import com.tunisianwatchme.Entity.Domaine;
+import com.tunisianwatchme.Entity.Geolocalisation;
 import com.tunisianwatchme.Entity.Lieu;
 import com.tunisianwatchme.Entity.Reclamation;
 import com.tunisianwatchme.Entity.Utilisateur;
@@ -36,10 +38,18 @@ public class ReclamationHandler extends DefaultHandler implements Runnable {
     String citoyenTag = "close";
     String domaineTag = "close";
     String etatTag = "close";
+
     String idgeolocalisationTag = "close";
+    String lonTag = "close";
+    String latTag = "close";
+
+    String idcommentaireTag = "close";
+    String texteComTag = "close";
+    String userComTag = "close";
+    String dateComTag = "close";
+
     String descriptionTag = "close";
     String villeTag = "close";
-    
 
     public ReclamationHandler() {
         try {
@@ -55,11 +65,10 @@ public class ReclamationHandler extends DefaultHandler implements Runnable {
     public Vector getReclamation() {
         return ReclamationVector;
     }
-    
-    
-    
-     private Reclamation currentReclamation;
-    
+
+    private Reclamation currentReclamation;
+    private Commentaire currentComentaire;
+
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         if (qName.equals("reclamation")) {
             if (currentReclamation != null) {
@@ -82,14 +91,26 @@ public class ReclamationHandler extends DefaultHandler implements Runnable {
             etatTag = "open";
         } else if (qName.equals("idgeolocalisation")) {
             idgeolocalisationTag = "open";
+        } else if (qName.equals("lon")) {
+            lonTag = "open";
+        } else if (qName.equals("lat")) {
+            latTag = "open";
+        } else if (qName.equals("idcommentaire")) {
+            idcommentaireTag = "open";
+        } else if (qName.equals("texte-commentaire")) {
+            texteComTag = "open";
+        } else if (qName.equals("user-commentaire")) {
+            userComTag = "open";
+        } else if (qName.equals("date-commentaire")) {
+            dateComTag = "open";
         } else if (qName.equals("description")) {
             descriptionTag = "open";
         } else if (qName.equals("ville")) {
             villeTag = "open";
         }
     }
-    
-     public void endElement(String uri, String localName, String qName) throws SAXException {
+
+    public void endElement(String uri, String localName, String qName) throws SAXException {
 
         if (qName.equals("reclamation")) {
             // we are no longer processing a <reg.../> tag
@@ -111,14 +132,28 @@ public class ReclamationHandler extends DefaultHandler implements Runnable {
             etatTag = "close";
         } else if (qName.equals("idgeolocalisation")) {
             idgeolocalisationTag = "close";
+        } else if (qName.equals("lon")) {
+            lonTag = "close";
+        } else if (qName.equals("lat")) {
+            latTag = "close";
+        } else if (qName.equals("idcommentaire")) {
+            idcommentaireTag = "close";
+        } else if (qName.equals("texte-commentaire")) {
+            texteComTag = "close";
+        } else if (qName.equals("user-commentaire")) {
+            userComTag = "close";
+        } else if (qName.equals("date-commentaire")) {
+            dateComTag = "close";
         } else if (qName.equals("description")) {
             descriptionTag = "close";
         } else if (qName.equals("ville")) {
             villeTag = "close";
+        } else if (qName.equals("")) {
+
         }
     }
 
-     public void characters(char[] ch, int start, int length) throws SAXException {
+    public void characters(char[] ch, int start, int length) throws SAXException {
         // we're only interested in this inside a <phone.../> tag
         // System.out.println("ab");
         if (currentReclamation != null) {
@@ -132,37 +167,73 @@ public class ReclamationHandler extends DefaultHandler implements Runnable {
             } else if (dateTag.equals("open")) {
                 String date = new String(ch, start, length);
                 currentReclamation.setDate(date);
-            }  else if (heureTag.equals("open")) {
+            } else if (heureTag.equals("open")) {
                 String heure = new String(ch, start, length);
                 currentReclamation.setHeure(heure);
-            }  else if (citoyenTag.equals("open")) {
+            } else if (citoyenTag.equals("open")) {
                 String citoyen = new String(ch, start, length);
                 Utilisateur user = new Utilisateur();
-                StringTokenizer st = new StringTokenizer(citoyen,' ');
-                
+                StringTokenizer st = new StringTokenizer(citoyen, ' ');
+
                 user.setNom(st.nextToken());
                 user.setPrenom(st.nextToken());
                 currentReclamation.setCitoyen(user);
-            }   else if (domaineTag.equals("open")) {
+            } else if (domaineTag.equals("open")) {
                 String domaine = new String(ch, start, length);
                 currentReclamation.setDomaine(new Domaine(domaine));
-            }  else if (etatTag.equals("open")) {
+            } else if (etatTag.equals("open")) {
                 String etat = new String(ch, start, length);
                 currentReclamation.setEtat(Integer.parseInt(etat));
-            }  else if (idgeolocalisationTag.equals("open")) {
-                String idgeolocalisation = new String(ch, start, length);
-                currentReclamation.setidGeolocalisation(Integer.parseInt(idgeolocalisation));
-            }  else if (descriptionTag.equals("open")) {
+            } else if (idgeolocalisationTag.equals("open")) {
+                System.out.println("abc");
+                String id = new String(ch, start, length);
+                Geolocalisation geo = new Geolocalisation();
+                geo.setId(Integer.parseInt(id));
+                currentReclamation.setGeolocalisation(geo);
+            } else if (lonTag.equals("open")) {
+                String lon = new String(ch, start, length);
+                Geolocalisation geo = currentReclamation.getGeolocalisation();
+                //geo.setLon(Double.parseDouble(lon));
+                currentReclamation.setGeolocalisation(geo);
+
+            } else if (latTag.equals("open")) {
+                String lat = new String(ch, start, length);
+                Geolocalisation geo = currentReclamation.getGeolocalisation();
+                geo.setLat(Double.parseDouble(lat));
+                currentReclamation.setGeolocalisation(geo);
+
+            } else if (descriptionTag.equals("open")) {
                 String description = new String(ch, start, length);
                 currentReclamation.setDescription(description);
-            }   else if (villeTag.equals("open")) {
+            } else if (villeTag.equals("open")) {
                 String ville = new String(ch, start, length);
                 Lieu lieu = new Lieu(ville);
                 currentReclamation.setLieu(lieu);
-            } 
+            } else if (idcommentaireTag.equals("open")) {
+                String id = new String(ch, start, length);
+                currentComentaire = new Commentaire();
+                currentComentaire.setId(Integer.parseInt(id));
+                //currentReclamation.addCommentaires(currentComentaire);
+            } else if (texteComTag.equals("open")) {
+                String text = new String(ch, start, length);
+                currentComentaire.setTexte(text);
+                //currentReclamation.addCommentaires(currentComentaire);
+            } else if (userComTag.equals("open")) {
+                String nom = new String(ch, start, length);
+                Utilisateur user = new Utilisateur();
+                StringTokenizer st = new StringTokenizer(nom, ' ');
+
+                user.setNom(st.nextToken());
+                user.setPrenom(st.nextToken());
+                currentComentaire.setUser(user);
+            } else if (dateComTag.equals("open")) {
+                String text = new String(ch, start, length);
+                currentComentaire.setDate(text);
+                currentReclamation.addCommentaires(currentComentaire);
+            }
         }
     }
-     
+
     public void run() {
         try {
             // get a parser object
