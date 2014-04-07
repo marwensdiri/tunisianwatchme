@@ -122,7 +122,6 @@ public class ReclamationHandler extends DefaultHandler implements Runnable {
         // we're only interested in this inside a <phone.../> tag
         // System.out.println("ab");
         if (currentReclamation != null) {
-            System.out.println("zzz");
             // don't forget to trim excess spaces from the ends of the string
             if (idTag.equals("open")) {
                 String id = new String(ch, start, length).trim();
