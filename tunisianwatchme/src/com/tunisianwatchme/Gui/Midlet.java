@@ -9,6 +9,7 @@ import com.tunisianwatchme.Entity.Commentaire;
 import com.tunisianwatchme.Entity.Reclamation;
 import com.tunisianwatchme.Entity.Utilisateur;
 import com.tunisianwatchme.Handler.ReclamationHandler;
+import com.tunisianwatchme.Post.ReclamationPost;
 import com.tunisianwatchme.Post.UtilisateurPost;
 import javax.microedition.midlet.*;
 
@@ -19,54 +20,10 @@ public class Midlet extends MIDlet {
 
     public void startApp() {
 
-        /**** test habchi  ****/
-//        ReclamationHandler dh = new ReclamationHandler();
-//        System.out.println(dh.getReclamation());
-//
-//        for (int i = 0; i < dh.getReclamation().size(); i++) {
-//            Reclamation rec = (Reclamation) dh.getReclamation().elementAt(i);
-//            System.out.println(rec.getId() + " " + rec.getListCommentaire().size());
-//            for(int j=0;j<rec.getListCommentaire().size();j++){
-//                Commentaire comm = (Commentaire) rec.getListCommentaire().elementAt(j);
-//                System.out.println(comm.getTexte());
-//            }
-//        }
-//        System.out.println(dh.getReclamation().size());
-        
-        
-        //        ReclamationHandler dh = new ReclamationHandler();
-//        System.out.println(dh.getReclamation());
-//        Reclamation rec = (Reclamation)dh.getReclamation().elementAt(0);
-//        System.out.println(rec.getId());
-        
-        /**** test Farouk  ****/
-  /*
-        
-//        Image img = Image.createImage(null);
-        String s = "TmV3IHdvcmQgdG8gZW5jb2RlIHVzaW5nIEJhc2U2NCBhbHNvIHNwZWNpYWwgY2hhcnMgbGlrZSDRIGFuZCDz";
-        try {
-            String str = ImageUtils.decToString(s);
-            System.out.println(str);
-//            Image img = Image.createImage(str);
-//            f.append(img);
-//            disp.setCurrent(f);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
- */       
-        /**** test Utilisateur  ****/
-        
-//        Utilisateur user = new Utilisateur();
-//        user.setNom("Tiger");
-//        user.setPrenom("Aymen");
-//        user.setMail("mail");
-//        user.setLogin("login");
-//        user.setMdp("password");
-//        user.setSexe('M');
-//        
-//        
-//        UtilisateurPost userPost = new UtilisateurPost(user,'A');
-//        userPost.start();
+        Reclamation rec = new Reclamation();
+        rec.setId(47);
+        ReclamationPost recP = new ReclamationPost(rec, 2);
+        recP.start();
         
     }
 
