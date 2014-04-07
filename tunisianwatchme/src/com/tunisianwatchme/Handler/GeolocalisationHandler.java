@@ -28,7 +28,6 @@ private int id = 0;
     String idTag = "close";
     String latTag = "close";
     String lonTag = "close";
-
     public GeolocalisationHandler(int id) {
         try {
             this.id=id;
@@ -106,7 +105,7 @@ private int id = 0;
             // get a parser object
             SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
             // get an InputStream from somewhere (could be HttpConnection, for example)
-            HttpConnection hc = (HttpConnection) Connector.open("http://localhost/tw_mobile/geolocalisations.php?id="+id);
+            HttpConnection hc = (HttpConnection) Connector.open("http://localhost/tw_mobile/geolocalisations.php?type=select&id="+id);
             DataInputStream dis = new DataInputStream(hc.openDataInputStream());
             parser.parse(dis, this);
         } catch (ParserConfigurationException ex) {
