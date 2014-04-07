@@ -24,7 +24,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /**
  *
- * @author Khadija
+ * @author MarwenSdiri <marwen.sdiri@esprit.tn>
  */
 
 public class CommentaireHandler extends DefaultHandler implements Runnable{
