@@ -1,11 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.tunisianwatchme.Handler;
 
-import com.tunisianwatchme.Entity.Domaine;
+import com.tunisianwatchme.Entity.Geolocalisation;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Vector;
@@ -20,17 +20,19 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /**
  *
- * @author asd
+ * @author Farouk
  */
-public class DomaineHandler extends DefaultHandler implements Runnable {
-
-    private Vector DomaineVector;
+public class GeolocalisationHandler extends DefaultHandler implements Runnable{
+private Vector GeolocalisationVector;
+private int id = 0;
     String idTag = "close";
-    String nomTag = "close";
+    String latTag = "close";
+    String lonTag = "close";
 
-    public DomaineHandler() {
+    public GeolocalisationHandler(int id) {
         try {
-            DomaineVector = new Vector();
+            this.id=id;
+            GeolocalisationVector = new Vector();
             Thread thr = new Thread(this);
             thr.start();
             thr.join();
@@ -39,38 +41,42 @@ public class DomaineHandler extends DefaultHandler implements Runnable {
         }
     }
 
-    public Vector getDomaineVector() {
-        return DomaineVector;
+    public Vector getGeolocalisationVector() {
+        return GeolocalisationVector;
     }
     
     
     
-     private Domaine currentDomaine;
+     private Geolocalisation currentDomaine;
     
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        if (qName.equals("domaine")) {
+        if (qName.equals("geolocalisation")) {
 
             if (currentDomaine != null) {
                 throw new IllegalStateException("already processing a DomaineVector");
             }
-            currentDomaine = new Domaine();
+            currentDomaine = new Geolocalisation();
         } else if (qName.equals("id")) {
             idTag = "open";
-        } else if (qName.equals("nom")) {
-            nomTag = "open";
+        } else if (qName.equals("lat")) {
+            latTag = "open";
+        } else if (qName.equals("lon")) {
+            lonTag = "open";
         }
     }
     
      public void endElement(String uri, String localName, String qName) throws SAXException {
 
-        if (qName.equals("domaine")) {
+        if (qName.equals("geolocalisation")) {
             // we are no longer processing a <reg.../> tag
-            DomaineVector.addElement(currentDomaine);
+            GeolocalisationVector.addElement(currentDomaine);
             currentDomaine = null;
         } else if (qName.equals("id")) {
             idTag = "close";
-        } else if (qName.equals("nom")) {
-            nomTag = "close";
+        } else if (qName.equals("lat")) {
+            latTag = "close";
+        } else if (qName.equals("lon")) {
+            lonTag = "close";
         }
     }
 
@@ -82,9 +88,15 @@ public class DomaineHandler extends DefaultHandler implements Runnable {
                 String id = new String(ch, start, length).trim();
                 currentDomaine.setId(Integer.parseInt(id));
             } else
-                if (nomTag.equals("open")) {
-                String nom = new String(ch, start, length);
-                currentDomaine.setNom(nom);
+                if (latTag.equals("open")) {
+                String Lat = new String(ch, start, length);
+                System.out.println("--------------------------"+Lat);
+                currentDomaine.setLat(Double.parseDouble(Lat));
+            } else
+                if (lonTag.equals("open")) {
+                String Lon = new String(ch, start, length);
+                System.out.println("--------------------------"+Lon);
+                currentDomaine.setLon(Double.parseDouble(Lon));
             } 
         }
     }
@@ -94,7 +106,7 @@ public class DomaineHandler extends DefaultHandler implements Runnable {
             // get a parser object
             SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
             // get an InputStream from somewhere (could be HttpConnection, for example)
-            HttpConnection hc = (HttpConnection) Connector.open("http://localhost/tw_mobile/domaines.php");
+            HttpConnection hc = (HttpConnection) Connector.open("http://localhost/tw_mobile/geolocalisations.php?id="+id);
             DataInputStream dis = new DataInputStream(hc.openDataInputStream());
             parser.parse(dis, this);
         } catch (ParserConfigurationException ex) {

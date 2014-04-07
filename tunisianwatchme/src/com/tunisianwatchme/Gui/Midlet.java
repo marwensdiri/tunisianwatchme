@@ -6,8 +6,8 @@ package com.tunisianwatchme.Gui;
  * and open the template in the editor.
  */
 
-import com.tunisianwatchme.Handler.CommentaireHandler;
-import com.tunisianwatchme.Handler.DomaineHandler;
+import com.tunisianwatchme.Entity.Geolocalisation;
+import com.tunisianwatchme.Handler.GeolocalisationHandler;
 import javax.microedition.midlet.*;
 
 /**
