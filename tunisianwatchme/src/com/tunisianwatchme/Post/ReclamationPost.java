@@ -5,6 +5,7 @@
  */
 package com.tunisianwatchme.Post;
 
+import com.tunisianwatchme.util.EncodeURL;
 import com.tunisianwatchme.Entity.Reclamation;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -31,7 +32,7 @@ public class ReclamationPost extends Thread {
         StringBuffer str = new StringBuffer("");
         String url = "";
         if (type == 1) {
-            url = "http://localhost/tw_mobile/reclamations.php?type=add&titre=" + reclamation.getTitre() + "&description=" + reclamation.getDescription() + "&idcitoyen=" + reclamation.getCitoyen().getId() + "&date=" + reclamation.getDate() + "&heure=" + reclamation.getHeure() + "&etat=0&idlieu=" + reclamation.getLieu().getId() + "&iddomaine=" + reclamation.getDomaine().getId();
+            url = "http://localhost/tw_mobile/reclamations.php?type=add&titre=" + EncodeURL.encode(reclamation.getTitre()) + "&description=" + EncodeURL.encode(reclamation.getDescription()) + "&idcitoyen=" + reclamation.getCitoyen().getId() + "&date=" + reclamation.getDate() + "&heure=" + reclamation.getHeure() + "&etat=0&idlieu=" + reclamation.getLieu().getId() + "&iddomaine=" + reclamation.getDomaine().getId();
         }
         if (reclamation.getGeolocalisation() != null) {
             url += "&lon=" + reclamation.getGeolocalisation().getLon() + "&lat=" + reclamation.getGeolocalisation().getLat();
