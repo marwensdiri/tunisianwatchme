@@ -50,7 +50,7 @@ public class StatHandler extends DefaultHandler implements Runnable{
      private Stat currentStat;
     
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        if (qName.equals("criteres")) {
+        if (qName.equals("data")) {
 
             if (currentStat != null) {
                 throw new IllegalStateException("already processing a statVector");
@@ -65,7 +65,7 @@ public class StatHandler extends DefaultHandler implements Runnable{
     
      public void endElement(String uri, String localName, String qName) throws SAXException {
 
-        if (qName.equals("criteres")) {
+        if (qName.equals("data")) {
             // we are no longer processing a <reg.../> tag
             statVector.addElement(currentStat);
             currentStat = null;

@@ -9,6 +9,7 @@ import com.tunisianwatchme.Entity.Domaine;
 import com.tunisianwatchme.Entity.Lieu;
 import com.tunisianwatchme.Entity.Reclamation;
 import com.tunisianwatchme.Entity.Utilisateur;
+import com.tunisianwatchme.Handler.StatHandler;
 import com.tunisianwatchme.Post.ReclamationPost;
 import javax.microedition.midlet.*;
 
@@ -40,6 +41,9 @@ public class Midlet extends MIDlet {
                 rec.setEtat(0);
                 ReclamationPost recP = new ReclamationPost(rec, 1);
                 recP.start();*/
+        
+               StatHandler statHandler = new StatHandler('l');
+               System.out.println(statHandler.getstatVector().size()); 
                         
         
     }
