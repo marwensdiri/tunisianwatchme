@@ -19,6 +19,7 @@ public class Midlet extends MIDlet {
 
     public void startApp() {
 
+        /**** test habchi  ****/
 //        ReclamationHandler dh = new ReclamationHandler();
 //        System.out.println(dh.getReclamation());
 //
@@ -38,6 +39,7 @@ public class Midlet extends MIDlet {
 //        Reclamation rec = (Reclamation)dh.getReclamation().elementAt(0);
 //        System.out.println(rec.getId());
         
+        /**** test Farouk  ****/
   /*
         
 //        Image img = Image.createImage(null);
@@ -54,17 +56,17 @@ public class Midlet extends MIDlet {
  */       
         /**** test Utilisateur  ****/
         
-        Utilisateur user = new Utilisateur();
-        user.setNom("Tiger");
-        user.setPrenom("Aymen");
-        user.setMail("mail");
-        user.setLogin("login");
-        user.setMdp("password");
-        user.setSexe('M');
-        
-        
-        UtilisateurPost userPost = new UtilisateurPost(user,'A');
-        userPost.start();
+//        Utilisateur user = new Utilisateur();
+//        user.setNom("Tiger");
+//        user.setPrenom("Aymen");
+//        user.setMail("mail");
+//        user.setLogin("login");
+//        user.setMdp("password");
+//        user.setSexe('M');
+//        
+//        
+//        UtilisateurPost userPost = new UtilisateurPost(user,'A');
+//        userPost.start();
         
     }
 
