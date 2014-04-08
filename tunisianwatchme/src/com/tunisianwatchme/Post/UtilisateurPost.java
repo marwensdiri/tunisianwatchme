@@ -6,6 +6,7 @@
 package com.tunisianwatchme.Post;
 
 import com.tunisianwatchme.Entity.Utilisateur;
+import com.tunisianwatchme.util.EncodeURL;
 import java.io.DataInputStream;
 import java.io.IOException;
 import javax.microedition.io.Connector;
@@ -31,7 +32,7 @@ public class UtilisateurPost extends Thread {
         DataInputStream dc;
         StringBuffer str = new StringBuffer("");
         if (aux == 'A') {
-             url = "http://localhost/tw_mobile/utilisateurs.php?type=add&nom=" + utilisateur.getNom() + "&prenom=" + utilisateur.getPrenom() + "&sexe=" + utilisateur.getSexe() + "&login=" + utilisateur.getLogin() + "&mdp=" + utilisateur.getMdp() + "&mail=" + utilisateur.getMail();
+             url = "http://localhost/tw_mobile/utilisateurs.php?type=add&nom=" + EncodeURL.encode(utilisateur.getNom()) + "&prenom=" + EncodeURL.encode(utilisateur.getPrenom()) + "&sexe=" + utilisateur.getSexe() + "&login=" + EncodeURL.encode(utilisateur.getLogin()) + "&mdp=" + EncodeURL.encode(utilisateur.getMdp()) + "&mail=" + EncodeURL.encode(utilisateur.getMail());
             System.out.println("test"+" a: "+ aux +" url :"+url  );
         } else if (aux == 'U') {
              url = "http://localhost/tw_mobile/utilisateurs.php?type=update&id="+ utilisateur.getId() + "&nom=" + utilisateur.getNom() + "&prenom=" + utilisateur.getPrenom() + "&sexe=" + utilisateur.getSexe() + "&login=" + utilisateur.getLogin() + "&mdp=" + utilisateur.getMdp() + "&mail=" + utilisateur.getMail();

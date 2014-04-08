@@ -6,6 +6,7 @@
 package com.tunisianwatchme.Post;
 
 import com.tunisianwatchme.Entity.Commentaire;
+import com.tunisianwatchme.util.EncodeURL;
 import java.io.DataInputStream;
 import java.io.IOException;
 import javax.microedition.io.Connector;
@@ -31,7 +32,7 @@ public class CommentairePost extends Thread {
         DataInputStream dc;
         StringBuffer str = new StringBuffer("");
         if (type == 1) {
-            String url = "http://localhost/tw_mobile/commentaires.php?type=add&texte=" + commentaire.getTexte() + "&idutilisateur=" + commentaire.getUser()+"$idreclamation"+commentaire.getIdReclamation()+"$date"+commentaire.getDate();
+            String url = "http://localhost/tw_mobile/commentaires.php?type=add&texte=" + EncodeURL.encode(commentaire.getTexte()) + "&idutilisateur=" + commentaire.getUser().getId()+"$idreclamation"+commentaire.getIdReclamation()+"$date"+commentaire.getDate();
         }else if(type ==2) {
             String url = "http://localhost/tw_mobile/commentaires.php?type=delete"+commentaire.getId();
         }
