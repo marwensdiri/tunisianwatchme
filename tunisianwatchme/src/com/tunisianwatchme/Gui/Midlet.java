@@ -1,5 +1,6 @@
 package com.tunisianwatchme.Gui;
 
+import com.tunisianwatchme.Handler.LoginHandler;
 import de.enough.polish.ui.TextField;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
@@ -30,25 +31,24 @@ import javax.microedition.lcdui.ItemStateListener;
  * @author Robert Virkus, j2mepolish@enough.de
  */
 public class Midlet extends MIDlet implements CommandListener {
+
     Display d;
     Form profil;
     Form menuScreen;
     Command cmdQuit = new Command("Quit", Command.EXIT, 10);
     Command log = new Command("Login", Command.SCREEN, 10);
     Command logout = new Command("Logout", Command.SCREEN, 10);
-  //  StringItem stringItem = new StringItem("", "", Item.BUTTON);
-   MyCustomItem stringItem = new MyCustomItem(""); 
+    //  StringItem stringItem = new StringItem("", "", Item.BUTTON);
+    MyCustomItem stringItem = new MyCustomItem("");
+
+    TextField field = new TextField("", "UserName", 30, TextField.ANY);
+    TextField field2 = new TextField("", "****", 30, TextField.ANY);
 
     public Midlet() {
         super();
-           d = Display.getDisplay(this);
+        d = Display.getDisplay(this);
         this.menuScreen = new Form("");
 
-        TextField field = new TextField("", "UserName", 30, TextField.ANY);
-
-        TextField field2 = new TextField("", "****", 30, TextField.PASSWORD);
-
-      
         StringItem img = new StringItem("", "", Item.LAYOUT_TOP);
         StringItem space = new StringItem("", "", Item.PLAIN);
 
@@ -60,24 +60,23 @@ public class Midlet extends MIDlet implements CommandListener {
 
         //#style textField
         this.menuScreen.append(field2);
-        
+
         //#style br
-      this.menuScreen.append(space);
-       
+        this.menuScreen.append(space);
+
         //#style loginPng
         this.menuScreen.append(stringItem);
         this.menuScreen.setCommandListener(this);
-        
-         this.menuScreen.addCommand(this.cmdQuit);
-          this.menuScreen.addCommand(this.log);
-        
+
+        this.menuScreen.addCommand(this.cmdQuit);
+        this.menuScreen.addCommand(this.log);
 
         //#style profilBar
         profil = new Form("");
 
-        StringItem img2 = new StringItem("",  "                                                             ", Item.LAYOUT_TOP);
-        StringItem flux = new StringItem("",  "                                                             ", Item.BUTTON);
-        StringItem flux1 = new StringItem("", "                                                             ",Item.BUTTON);
+        StringItem img2 = new StringItem("", "                                                             ", Item.LAYOUT_TOP);
+        StringItem flux = new StringItem("", "                                                             ", Item.BUTTON);
+        StringItem flux1 = new StringItem("", "                                                             ", Item.BUTTON);
         StringItem flux2 = new StringItem("", "                                                             ", Item.BUTTON);
         StringItem flux3 = new StringItem("", "                                                             ", Item.BUTTON);
 
@@ -114,24 +113,20 @@ public class Midlet extends MIDlet implements CommandListener {
     }
 
     public void commandAction(Command cmd, Displayable screen) {
-        if (screen== this.menuScreen && cmd == this.log) {
-            
+        if (screen == this.menuScreen && cmd == this.log) {
 
-            
             d.setCurrent(this.profil);
 
         }
-        if (screen== this.menuScreen && cmd == this.cmdQuit) {
+        if (screen == this.menuScreen && cmd == this.cmdQuit) {
             notifyDestroyed();
         }
-         if (screen== this.profil && cmd == this.cmdQuit) {
+        if (screen == this.profil && cmd == this.cmdQuit) {
             notifyDestroyed();
         }
-        
-        if ( screen== this.profil && cmd == this.logout) {
-           
 
-            
+        if (screen == this.profil && cmd == this.logout) {
+
             d.setCurrent(menuScreen);
         }
     }
@@ -140,50 +135,56 @@ public class Midlet extends MIDlet implements CommandListener {
 
     }
 
-    class MyCustomItem extends CustomItem {
+    class MyCustomItem extends CustomItem implements Runnable {
 
-    int count = 0;
+        int count = 0;
 
-    public MyCustomItem(String label) {
-        super(label);
-    }
+        public MyCustomItem(String label) {
+            super(label);
+        }
 
-    protected void paint(Graphics g, int w, int h) {
-        g.drawString("" + count, 10, 10, Graphics.TOP | Graphics.LEFT);
-        //Paint ur own stuff here
-    }
+        protected void paint(Graphics g, int w, int h) {
+            g.drawString("" + count, 10, 10, Graphics.TOP | Graphics.LEFT);
+            //Paint ur own stuff here
+        }
 
-    
+        protected void keyPressed(int keyCode) {
+            //write ur code here to do stuff
 
-    protected void keyPressed(int keyCode) {
-        //write ur code here to do stuff
-     
-        if (keyCode == -5 ) {
-            count++;
-            System.out.println(count);
-            d.setCurrent(profil);
+            if (keyCode == -5) {
+                Thread thr = new Thread(this);
+                thr.start();
+            }
+        }
+
+        protected int getMinContentWidth() {
+            return 0;
+
+        }
+
+        protected int getMinContentHeight() {
+            return 0;
+        }
+
+        protected int getPrefContentWidth(int height) {
+            return 0;
+        }
+
+        protected int getPrefContentHeight(int width) {
+            return 0;
+        }
+
+        public void run() {
+            if (d.getCurrent() == menuScreen) {
+
+                System.out.println(field.getText());
+                LoginHandler loginHandler = new LoginHandler(field.getText(), field2.getText());
+                if (loginHandler.getCurrentUtilisateur() != null) {
+                    d.setCurrent(profil);
+                }
+            }
+
         }
     }
 
-    protected int getMinContentWidth() {
-        return 0;
-        
-    }
-
-    protected int getMinContentHeight() {
-        return 0 ;
-    }
-
-    protected int getPrefContentWidth(int height) {
-        return 0 ;
-    }
-
-    protected int getPrefContentHeight(int width) {
-       return 0 ;
-    }
-
 }
-    
-}
-
-
