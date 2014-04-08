@@ -34,7 +34,6 @@ Vector utilisateurVector;
     String adressTag = "close";
     String dateNaissanceTag = "close";
     String photoTag = "close";
-    String pathTag = "close";
     String loginTag = "close";
     String mdpTag = "close";
     String mailTag = "close";
@@ -78,8 +77,6 @@ Vector utilisateurVector;
             dateNaissanceTag = "close";
         } else if (qName.equals("photo")) {
             photoTag = "close";
-        } else if (qName.equals("path")) {
-            pathTag = "close";
         } else if (qName.equals("login")) {
             loginTag = "close";
         } else if (qName.equals("mdp")) {
@@ -111,8 +108,6 @@ Vector utilisateurVector;
             dateNaissanceTag = "close";
         } else if (qName.equals("photo")) {
             photoTag = "close";
-        } else if (qName.equals("path")) {
-            pathTag = "close";
         } else if (qName.equals("login")) {
             loginTag = "close";
         } else if (qName.equals("mdp")) {
@@ -156,10 +151,6 @@ Vector utilisateurVector;
 //                String photo = new String(ch, start, length);         
 //                currentUtilisateur.setPhoto(photo);
 //            }  else
-                if (pathTag.equals("open")) {
-                String path = new String(ch, start, length);
-                currentUtilisateur.setPath(path);
-            }  else
                 if (loginTag.equals("open")) {
                 String login = new String(ch, start, length);
                 currentUtilisateur.setLogin(login);

@@ -22,7 +22,6 @@ public class Utilisateur {
     private String adress;
     private String dateNaissance;
     private Image photo;
-    private String path;
     private String login;
     private String mdp;
     private String mail;
@@ -121,14 +120,6 @@ public class Utilisateur {
         this.adress = adress;
     }
 
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
 
     public String toString() {
         return "id: " +id+" nom: "+nom   ;

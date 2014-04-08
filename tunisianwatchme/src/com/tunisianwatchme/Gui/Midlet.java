@@ -56,17 +56,18 @@ public class Midlet extends MIDlet {
  */       
         /**** test Utilisateur  ****/
         
-//        Utilisateur user = new Utilisateur();
-//        user.setNom("Tiger");
-//        user.setPrenom("Aymen");
-//        user.setMail("mail");
-//        user.setLogin("login");
-//        user.setMdp("password");
-//        user.setSexe('M');
-//        
-//        
-//        UtilisateurPost userPost = new UtilisateurPost(user,'A');
-//        userPost.start();
+        Utilisateur user = new Utilisateur();
+        user.setId(43);
+        user.setNom("Tiger");
+        user.setPrenom("Aymen");
+        user.setMail("mail");
+        user.setLogin("login");
+        user.setMdp("password");
+        user.setSexe('M');
+        
+        
+        UtilisateurPost userPost = new UtilisateurPost(user,'U');
+        userPost.start();
         
     }
 
