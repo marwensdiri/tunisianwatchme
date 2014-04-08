@@ -11,7 +11,8 @@ import com.tunisianwatchme.Entity.Geolocalisation;
 import com.tunisianwatchme.Entity.Lieu;
 import com.tunisianwatchme.Entity.Reclamation;
 import com.tunisianwatchme.Entity.Utilisateur;
-import gov.nist.core.StringTokenizer;
+import de.enough.polish.util.StringTokenizer;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Vector;

@@ -4,7 +4,7 @@
  */
 package com.tunisianwatchme.Handler;
 
-import com.sun.midp.io.Base64;
+import de.enough.polish.util.base64.Base64;
 import java.io.IOException;
 
 /**

@@ -1,0 +1,288 @@
+title {
+}
+
+
+
+/*************    midlet Profil          ***************************************************************************************************/
+
+
+
+.profilBar {
+	
+	background {
+	background-image : url( bar.png ) ;
+	anchor: left | top ;
+}
+}
+
+.profilContainer {
+background {
+	background-image: url( container.png ) ;
+
+}
+	
+}
+.flux {
+        
+        padding-bottom: 7% ;
+			background-image : url( flux.png );
+		layout: horizontal-center ;
+		background-color : #DC1F28 ; 
+  } 
+  
+.flux:hover {
+
+padding-bottom: 7% ;
+	background-image: url(flux_p.png);
+	layout: horizontal-center ;
+	background-color : #DC1F28 ; 
+}
+
+.flux:pressed {
+       
+		padding-bottom: 7% ;
+		background-image : url(flux_p.png );
+		layout: horizontal-center ;
+		background-color : #DC1F28 ; 
+  } 
+
+.flux1{
+			padding-bottom: 7% ;
+			background-image : url( flux1.png );
+		layout: horizontal-center   ;
+		background-color : #DC1F28 ; 
+		
+  } 
+
+.flux1:hover {
+padding-bottom: 7% ;
+	background-image: url(flux1_p.png);
+	layout: horizontal-center ;
+	background-color : #DC1F28 ; 
+}
+
+.flux1:pressed {
+        
+		padding-bottom: 7% ;
+		layout: horizontal-center ;
+		background-image : url( flux1_p.png );
+		background-color : #DC1F28 ; 
+		
+  } 
+
+.flux2 {
+        padding-bottom: 7% ;
+		background-image : url( flux2.png );
+		layout: horizontal-center | vcenter  ;
+		background-color : #DC1F28 ; 
+		
+  } 
+.flux2:hover {
+padding-bottom: 7% ;
+	background-image: url(flux2_p.png);
+	layout: horizontal-center ;
+	background-color : #DC1F28 ; 
+}
+.flux2:pressed {
+        
+		padding-bottom: 7% ;
+		layout: horizontal-center ;
+		background-image : url( flux2_p.png );
+		background-color : #DC1F28 ; 
+		
+  } 
+ 
+.flux3{
+        
+			background-image : url( flux3.png );
+		layout: horizontal-center   ;
+		background-color : #DC1F28 ; 
+		
+  } 
+.flux3:hover {
+
+	background-image: url(flux3_p.png);
+	layout: horizontal-center ;
+	background-color : #DC1F28 ; 
+}
+.flux3:pressed {
+        
+	
+		layout: horizontal-center ;
+		background-image : url( flux3_p.png );
+		background-color : #DC1F28 ; 
+		
+  } 
+
+
+/************ main screen *************************************************/
+
+
+.mainScreen {
+padding-bottom : 40% ; 
+	padding-top : 10% ; 
+	padding-left: 10%;
+	padding-right: 10%;
+	
+	
+	background-image : url( logo.png );
+	
+	
+	layout: horizontal-center ;
+
+}
+
+
+.br {
+       
+       margin : 0,5% ; 	   
+
+ }
+.textField {
+	
+	background-color: silver;
+	border-color: gray;
+	textfield-direct-input: true;
+	focused-style: .focusedInput;
+	textfield-caret-color: red;
+	layout: horizontal-center | horizontal-expand;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+.textField:hover {
+	background-color: white;
+	border-color: black;
+}
+
+
+.loginPng {
+padding-top: 10% ;
+    padding-bottom: 10% ;
+	background-image: url(login.png);
+	layout: horizontal-center ;
+}
+
+.loginPng:hover {
+padding-top: 10% ;
+padding-bottom: 10% ;
+	background-image: url(login.png);
+	layout: horizontal-center ;
+}
+
+.loginPng:pressed {
+padding-top: 10% ;
+padding-bottom: 10% ;
+	background-image: url(login_p.png);
+	layout: horizontal-center ;
+}
+
+
+
+label {
+	font-color: #fff;
+	text-effect: shadow;
+	text-shadow-color: #333;
+}
+
+
+/*************    Scrollbar          ***************************************************************************************************/
+scrollbar {
+	scrollbar-slider-color: #333;
+	scrollbar-slider-width: 4;
+	scrollbar-fadeout: true;
+	opacity: 85%;
+}
+
+
+/*************   Menu Bar     **********************************************************************************/
+
+menubar {
+	margin: 0;
+	padding-top: 3;
+	padding: 2;
+	background {
+		type: vertical-gradient;
+		top-color: #aaa;
+		bottom-color: #fff;
+		start: 10%;
+		end: 100%;
+	}
+}
+
+/**
+ * Commands within the menubar on the left side
+ */
+leftcommand
+{
+	margin: 0;
+    //#if polish.key.MiddleSoftKey:defined or polish.MenuBar.useMiddleCommand
+    	/* the middle command is used, so lower the left and right commands relatively */
+		padding-top: 7;
+	//#endif
+	padding-bottom: 0;
+	font-color: white;
+	font-style: bold;
+	font-size: large;
+	text-effect: shadow;
+	text-shadow-color: #333;
+	font-size: small;
+}
+
+/**
+ * Commands within the menubar on the right side
+ */
+rightcommand extends leftcommand
+{
+	layout: right;
+}
+
+middlecommand extends leftcommand {
+	padding-top: 1;
+	font-color: black;
+}
+
+
+
+
+menu {
+	margin-left: 2;
+	padding: 2;
+	background {
+		
+		
+		border-width: 2;
+		border-color: black;
+	}
+	
+	font-size: large;
+	font-style: bold;
+}
+
+
+menuItem {
+	margin-top: 2;
+	padding: 2;
+	padding-left: 5;
+	
+	layout: left | horizontal-expand;
+}
+
+/**
+  * A focused menuItem
+  */
+menuItem:hover {
+	
+	layout: left | horizontal-expand;
+}
+
+
+
+
+
+
+
+
+
+
+
