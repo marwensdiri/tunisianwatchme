@@ -35,7 +35,7 @@ public class UtilisateurPost extends Thread {
             System.out.println("test"+" a: "+ aux +" url :"+url  );
         } else if (aux == 'U') {
 
-             url = "http://localhost/tw_mobile/utilisateurs.php?type=apdate&nom=" + utilisateur.getNom() + "&prenom=" + utilisateur.getPrenom() + "&sexe=" + utilisateur.getSexe() + "&login=" + utilisateur.getLogin() + "&mdp=" + utilisateur.getMdp() + "&mail=" + utilisateur.getMail();
+             url = "http://localhost/tw_mobile/utilisateurs.php?type=update&id="+ utilisateur.getId() + "nom=" + utilisateur.getNom() + "&prenom=" + utilisateur.getPrenom() + "&sexe=" + utilisateur.getSexe() + "&login=" + utilisateur.getLogin() + "&mdp=" + utilisateur.getMdp() + "&mail=" + utilisateur.getMail();
 
         } else if (aux == 'D') {
 

@@ -19,18 +19,18 @@ public class Midlet extends MIDlet {
 
     public void startApp() {
 
-        ReclamationHandler dh = new ReclamationHandler();
-        System.out.println(dh.getReclamation());
-
-        for (int i = 0; i < dh.getReclamation().size(); i++) {
-            Reclamation rec = (Reclamation) dh.getReclamation().elementAt(i);
-            System.out.println(rec.getId() + " " + rec.getListCommentaire().size());
-            for(int j=0;j<rec.getListCommentaire().size();j++){
-                Commentaire comm = (Commentaire) rec.getListCommentaire().elementAt(j);
-                System.out.println(comm.getTexte());
-            }
-        }
-        System.out.println(dh.getReclamation().size());
+//        ReclamationHandler dh = new ReclamationHandler();
+//        System.out.println(dh.getReclamation());
+//
+//        for (int i = 0; i < dh.getReclamation().size(); i++) {
+//            Reclamation rec = (Reclamation) dh.getReclamation().elementAt(i);
+//            System.out.println(rec.getId() + " " + rec.getListCommentaire().size());
+//            for(int j=0;j<rec.getListCommentaire().size();j++){
+//                Commentaire comm = (Commentaire) rec.getListCommentaire().elementAt(j);
+//                System.out.println(comm.getTexte());
+//            }
+//        }
+//        System.out.println(dh.getReclamation().size());
         
         
         //        ReclamationHandler dh = new ReclamationHandler();
