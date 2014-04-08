@@ -29,11 +29,15 @@ public class ReclamationPost extends Thread {
         HttpConnection hc;
         DataInputStream dc;
         StringBuffer str = new StringBuffer("");
-         String url = "";
-        if(type == 1)
-            url = "http://localhost/tw_mobile/reclamations.php?type=add&titre="+reclamation.getTitre()+"&description="+reclamation.getDescription()+"&idcitoyen="+reclamation.getCitoyen().getId()+"&date="+reclamation.getDate()+"&heure="+reclamation.getHeure()+"&etat=0&idlieu="+reclamation.getLieu().getId()+"&iddomaine="+reclamation.getDomaine().getId();
-          //  if()
-       // else if(type == 2)
+        String url = "";
+        if (type == 1) {
+            url = "http://localhost/tw_mobile/reclamations.php?type=add&titre=" + reclamation.getTitre() + "&description=" + reclamation.getDescription() + "&idcitoyen=" + reclamation.getCitoyen().getId() + "&date=" + reclamation.getDate() + "&heure=" + reclamation.getHeure() + "&etat=0&idlieu=" + reclamation.getLieu().getId() + "&iddomaine=" + reclamation.getDomaine().getId();
+        }
+        if (reclamation.getGeolocalisation() != null) {
+            url += "&lon=" + reclamation.getGeolocalisation().getLon() + "&lat=" + reclamation.getGeolocalisation().getLat();
+        } else if (type == 2) {
+            url = "http://localhost/tw_mobile/reclamations.php?type=delete&id=" + reclamation.getId();
+        }
         try {
             hc = (HttpConnection) Connector.open(url);
             dc = new DataInputStream(hc.openInputStream());

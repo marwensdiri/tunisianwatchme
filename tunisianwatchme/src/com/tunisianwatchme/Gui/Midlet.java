@@ -9,6 +9,7 @@ import com.tunisianwatchme.Entity.Commentaire;
 import com.tunisianwatchme.Entity.Reclamation;
 import com.tunisianwatchme.Entity.Utilisateur;
 import com.tunisianwatchme.Handler.ReclamationHandler;
+import com.tunisianwatchme.Post.ReclamationPost;
 import com.tunisianwatchme.Post.UtilisateurPost;
 import javax.microedition.midlet.*;
 
