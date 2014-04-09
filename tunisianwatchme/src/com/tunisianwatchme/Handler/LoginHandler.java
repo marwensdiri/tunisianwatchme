@@ -50,6 +50,7 @@ public class LoginHandler extends DefaultHandler implements Runnable{
     
     public LoginHandler(String login,String password) {
         try {
+            System.out.println(login);
             this.login = login;
             this.password = password;
             //this.login = "a";
@@ -169,7 +170,7 @@ public class LoginHandler extends DefaultHandler implements Runnable{
             // get a parser object
             SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
             // get an InputStream from somewhere (could be HttpConnection, for example)
-            HttpConnection hc = (HttpConnection) Connector.open("http://localhost/tw_mobile/login.php?login="+login+"&password="+password);
+            HttpConnection hc = (HttpConnection) Connector.open("http://127.0.0.1/tw_mobile/login.php?login="+login+"&password="+password);
             DataInputStream dis = new DataInputStream(hc.openDataInputStream());
             parser.parse(dis, this);
         } catch (ParserConfigurationException ex) {

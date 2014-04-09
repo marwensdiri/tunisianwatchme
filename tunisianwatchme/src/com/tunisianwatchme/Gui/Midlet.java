@@ -202,9 +202,12 @@ public class Midlet extends MIDlet implements ItemCommandListener,CommandListene
 
     
             public void run() {
+                System.out.println("aa");
             if (d.getCurrent() == menuScreen ) {
+                System.out.println("bb");
                 LoginHandler loginHandler = new LoginHandler(Loginfield.getText(), Passfield.getText());
                 if (loginHandler.getCurrentUtilisateur() != null) {
+                    System.out.println("cc");
                     d.setCurrent(profil);
                 }
             }
