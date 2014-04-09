@@ -12,13 +12,8 @@ import javax.microedition.midlet.MIDletStateChangeException;
 import javax.microedition.lcdui.Item;
 import javax.microedition.lcdui.StringItem;
 
-import de.enough.polish.ui.Style;
-import de.enough.polish.ui.StyleSheet;
-import de.enough.polish.ui.UiAccess;
 import javax.microedition.lcdui.CustomItem;
 import javax.microedition.lcdui.Graphics;
-import javax.microedition.lcdui.ItemCommandListener;
-import javax.microedition.lcdui.ItemStateListener;
 
 /**
  * <p>
@@ -30,28 +25,34 @@ import javax.microedition.lcdui.ItemStateListener;
  * @author Robert Virkus, j2mepolish@enough.de
  */
 public class Midlet extends MIDlet implements CommandListener {
+
     Display d;
     Form profil;
     Form menuScreen;
+    Form ajout;
     Command cmdQuit = new Command("Quit", Command.EXIT, 10);
     Command log = new Command("Login", Command.SCREEN, 10);
     Command logout = new Command("Logout", Command.SCREEN, 10);
-  //  StringItem stringItem = new StringItem("", "", Item.BUTTON);
-   MyCustomItem stringItem = new MyCustomItem(""); 
+    TextField field = new TextField("", "UserName", 30, TextField.ANY);
+
+    TextField field2 = new TextField("", "****", 30, TextField.PASSWORD);
+
+    StringItem img = new StringItem("", "", Item.LAYOUT_TOP);
+    StringItem acceuil_bar = new StringItem("", "", Item.LAYOUT_TOP);
+    StringItem space = new StringItem("", "", Item.PLAIN);
+
+    MyCustomItem stringItem = new MyCustomItem("");
+    StringItem img2 = new StringItem("", "                                                                             ", Item.LAYOUT_TOP);
+    StringItem flux = new StringItem("", "                                                                             ", Item.BUTTON);
+    StringItem flux1 = new StringItem("", "                                                                             ", Item.BUTTON);
+    StringItem flux2 = new StringItem("", "                                                                             ", Item.BUTTON);
+    StringItem flux3 = new StringItem("", "                                                                             ", Item.BUTTON);
 
     public Midlet() {
         super();
-           d = Display.getDisplay(this);
+        d = Display.getDisplay(this);
         this.menuScreen = new Form("");
-
-        TextField field = new TextField("", "UserName", 30, TextField.ANY);
-
-        TextField field2 = new TextField("", "****", 30, TextField.PASSWORD);
-
-      
-        StringItem img = new StringItem("", "", Item.LAYOUT_TOP);
-        StringItem space = new StringItem("", "", Item.PLAIN);
-
+//  Interface Authentification 
         //#style mainScreen
         this.menuScreen.append(img);
 
@@ -60,26 +61,20 @@ public class Midlet extends MIDlet implements CommandListener {
 
         //#style textField
         this.menuScreen.append(field2);
-        
+
         //#style br
-      this.menuScreen.append(space);
-       
+        this.menuScreen.append(space);
+
         //#style loginPng
         this.menuScreen.append(stringItem);
         this.menuScreen.setCommandListener(this);
-        
-         this.menuScreen.addCommand(this.cmdQuit);
-          this.menuScreen.addCommand(this.log);
-        
 
+        this.menuScreen.addCommand(this.cmdQuit);
+        this.menuScreen.addCommand(this.log);
+
+//Interface Profile 
         //#style profilBar
         profil = new Form("");
-
-        StringItem img2 = new StringItem("",  "                                                             ", Item.LAYOUT_TOP);
-        StringItem flux = new StringItem("",  "                                                             ", Item.BUTTON);
-        StringItem flux1 = new StringItem("", "                                                             ",Item.BUTTON);
-        StringItem flux2 = new StringItem("", "                                                             ", Item.BUTTON);
-        StringItem flux3 = new StringItem("", "                                                             ", Item.BUTTON);
 
         profil.append(img2);
         profil.append(img2);
@@ -97,6 +92,14 @@ public class Midlet extends MIDlet implements CommandListener {
         profil.setCommandListener(this);
         profil.addCommand(this.logout);
         profil.addCommand(this.cmdQuit);
+
+        //Interface Ajout Réclamation 
+        ajout = new Form("");
+        
+        //style acceuilBar
+        this.ajout.append(img);
+        ajout.setCommandListener(this);
+
     }
 
     protected void startApp() throws MIDletStateChangeException {
@@ -114,24 +117,20 @@ public class Midlet extends MIDlet implements CommandListener {
     }
 
     public void commandAction(Command cmd, Displayable screen) {
-        if (screen== this.menuScreen && cmd == this.log) {
-            
+        if (screen == this.menuScreen && cmd == this.log) {
 
-            
             d.setCurrent(this.profil);
 
         }
-        if (screen== this.menuScreen && cmd == this.cmdQuit) {
+        if (screen == this.menuScreen && cmd == this.cmdQuit) {
             notifyDestroyed();
         }
-         if (screen== this.profil && cmd == this.cmdQuit) {
+        if (screen == this.profil && cmd == this.cmdQuit) {
             notifyDestroyed();
         }
-        
-        if ( screen== this.profil && cmd == this.logout) {
-           
 
-            
+        if (screen == this.profil && cmd == this.logout) {
+
             d.setCurrent(menuScreen);
         }
     }
@@ -142,48 +141,43 @@ public class Midlet extends MIDlet implements CommandListener {
 
     class MyCustomItem extends CustomItem {
 
-    int count = 0;
+        int count = 0;
 
-    public MyCustomItem(String label) {
-        super(label);
-    }
-
-    protected void paint(Graphics g, int w, int h) {
-        g.drawString("" + count, 10, 10, Graphics.TOP | Graphics.LEFT);
-        //Paint ur own stuff here
-    }
-
-    
-
-    protected void keyPressed(int keyCode) {
-        //write ur code here to do stuff
-     
-        if (keyCode == -5 ) {
-            count++;
-            System.out.println(count);
-            d.setCurrent(profil);
+        public MyCustomItem(String label) {
+            super(label);
         }
-    }
 
-    protected int getMinContentWidth() {
-        return 0;
-        
-    }
+        protected void paint(Graphics g, int w, int h) {
+            g.drawString("" + count, 10, 10, Graphics.TOP | Graphics.LEFT);
+            //Paint ur own stuff here
+        }
 
-    protected int getMinContentHeight() {
-        return 0 ;
-    }
+        protected void keyPressed(int keyCode ) {
+            
+            if ( keyCode == -5 ) {
+                count++;
+                System.out.println(count);
+                d.setCurrent(profil);
+            }
+        }
 
-    protected int getPrefContentWidth(int height) {
-        return 0 ;
-    }
+        protected int getMinContentWidth() {
+            return 0;
 
-    protected int getPrefContentHeight(int width) {
-       return 0 ;
+        }
+
+        protected int getMinContentHeight() {
+            return 0;
+        }
+
+        protected int getPrefContentWidth(int height) {
+            return 0;
+        }
+
+        protected int getPrefContentHeight(int width) {
+            return 0;
+        }
+
     }
 
 }
-    
-}
-
-

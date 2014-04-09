@@ -15,6 +15,7 @@ title {
 }
 }
 
+
 .profilContainer {
 background {
 	background-image: url( container.png ) ;
@@ -22,28 +23,41 @@ background {
 }
 	
 }
+
+.acceuilBar {
+	
+	background {
+	background-image : url( acceuil_bar.png ) ;
+	anchor: left | top ;
+}
 .flux {
         
         padding-bottom: 7% ;
-			background-image : url( flux.png );
+			background-image : url(flux.png);
+			background-color : #DC1F28 ; 
+			border {
+		type: round-rect;
+		color: black;
+		arc: 10;
+	}
 		layout: horizontal-center ;
-		background-color : #DC1F28 ; 
+		
   } 
   
-.flux:hover {
 
-padding-bottom: 7% ;
-	background-image: url(flux_p.png);
-	layout: horizontal-center ;
-	background-color : #DC1F28 ; 
-}
 
 .flux:pressed {
        
 		padding-bottom: 7% ;
-		background-image : url(flux_p.png );
+		background-image : url(flux_p.png);
+		background-color : #A0A0A0 ; 
+		border {
+		type: round-rect;
+		color: black;
+		arc: 10;
+	}
 		layout: horizontal-center ;
-		background-color : #DC1F28 ; 
+		
   } 
 
 .flux1{
@@ -51,66 +65,82 @@ padding-bottom: 7% ;
 			background-image : url( flux1.png );
 		layout: horizontal-center   ;
 		background-color : #DC1F28 ; 
+		border {
+		type: round-rect;
+		color: black;
+		arc: 10;
+	}
+		opacity:100%;
 		
   } 
 
-.flux1:hover {
-padding-bottom: 7% ;
-	background-image: url(flux1_p.png);
-	layout: horizontal-center ;
-	background-color : #DC1F28 ; 
-}
+
 
 .flux1:pressed {
         
 		padding-bottom: 7% ;
 		layout: horizontal-center ;
 		background-image : url( flux1_p.png );
-		background-color : #DC1F28 ; 
-		
+		background-color : #A0A0A0 ; 
+		border {
+		type: round-rect;
+		color: black;
+		arc: 10;
+	}
+		opacity:100%;
   } 
 
 .flux2 {
         padding-bottom: 7% ;
 		background-image : url( flux2.png );
-		layout: horizontal-center | vcenter  ;
+		border {
+		type: round-rect;
+		color: black;
+		arc: 10;
+	}
+		layout: horizontal-center  ;
 		background-color : #DC1F28 ; 
 		
   } 
-.flux2:hover {
-padding-bottom: 7% ;
-	background-image: url(flux2_p.png);
-	layout: horizontal-center ;
-	background-color : #DC1F28 ; 
-}
+
 .flux2:pressed {
         
 		padding-bottom: 7% ;
 		layout: horizontal-center ;
 		background-image : url( flux2_p.png );
-		background-color : #DC1F28 ; 
+		border {
+		type: round-rect;
+		color: black;
+		arc: 10;
+	}
+		background-color :#A0A0A0 ; 
 		
   } 
  
 .flux3{
-        
+        padding-bottom: 7% ;
 			background-image : url( flux3.png );
+			
 		layout: horizontal-center   ;
 		background-color : #DC1F28 ; 
-		
+		border {
+		type: round-rect;
+		color: black;
+		arc: 10;
+	}
   } 
-.flux3:hover {
 
-	background-image: url(flux3_p.png);
-	layout: horizontal-center ;
-	background-color : #DC1F28 ; 
-}
 .flux3:pressed {
         
-	
+	padding-bottom: 7% ;
 		layout: horizontal-center ;
 		background-image : url( flux3_p.png );
-		background-color : #DC1F28 ; 
+		background-color : #A0A0A0 ; 
+		border {
+		type: round-rect;
+		color: black;
+		arc: 10;
+	}
 		
   } 
 
