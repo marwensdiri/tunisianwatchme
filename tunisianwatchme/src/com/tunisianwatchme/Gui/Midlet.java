@@ -268,7 +268,7 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
             System.out.println(reclamation.getDate());
             ReclamationPost rp = new ReclamationPost(reclamation, 1);
             rp.start();
-            Alert alertSuccess = new Alert
+           // Alert alertSuccess = new Alert
 
         }
 
