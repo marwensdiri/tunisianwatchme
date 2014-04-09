@@ -22,7 +22,7 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  * @author asd
  */
-public class LieuHandler extends DefaultHandler implements Runnable {
+public class LieuHandler extends DefaultHandler implements Runnable{
 
     private Vector LieuVector;
     String idTag = "close";
@@ -34,6 +34,7 @@ public class LieuHandler extends DefaultHandler implements Runnable {
             Thread thr = new Thread(this);
             thr.start();
             thr.join();
+            
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
