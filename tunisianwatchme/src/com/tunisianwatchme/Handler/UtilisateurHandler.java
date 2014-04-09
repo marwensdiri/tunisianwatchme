@@ -33,14 +33,14 @@ public class UtilisateurHandler extends DefaultHandler implements Runnable {
     String sexeTag = "close";
     String adressTag = "close";
     String dateNaissanceTag = "close";
-    //String photoTag = "close";
+    String photoTag = "close";
     String loginTag = "close";
     String mdpTag = "close";
     String mailTag = "close";
     String typeTag = "close";
     int idUtilisateur;
 
-;
+    ;
     
     public UtilisateurHandler(int idUtilisateur) {
         try {
@@ -53,8 +53,6 @@ public class UtilisateurHandler extends DefaultHandler implements Runnable {
             ex.printStackTrace();
         }
     }
-    
-    
 
     public Vector getUtilisateurVector() {
         return utilisateurVector;
@@ -79,9 +77,9 @@ public class UtilisateurHandler extends DefaultHandler implements Runnable {
             adressTag = "open";
         } else if (qName.equals("dateNaissance")) {
             dateNaissanceTag = "open";
-        }/* else if (qName.equals("photo")) {
+        } else if (qName.equals("photo")) {
             photoTag = "open";
-        }*/ else if (qName.equals("login")) {
+        } else if (qName.equals("login")) {
             loginTag = "open";
         } else if (qName.equals("mdp")) {
             mdpTag = "open";
@@ -110,9 +108,9 @@ public class UtilisateurHandler extends DefaultHandler implements Runnable {
             adressTag = "close";
         } else if (qName.equals("dateNaissance")) {
             dateNaissanceTag = "close";
-        }/* else if (qName.equals("photo")) {
+        } else if (qName.equals("photo")) {
             photoTag = "close";
-        }*/ else if (qName.equals("login")) {
+        } else if (qName.equals("login")) {
             loginTag = "close";
         } else if (qName.equals("mdp")) {
             mdpTag = "close";
@@ -154,6 +152,9 @@ public class UtilisateurHandler extends DefaultHandler implements Runnable {
             } else if (mailTag.equals("open")) {
                 String mail = new String(ch, start, length);
                 currentUtilisateur.setMail(mail);
+            } else if (photoTag.equals("open")) {
+                String photo = new String(ch, start, length);
+                currentUtilisateur.setPhoto(photo);
             } else if (typeTag.equals("open")) {
                 String type = new String(ch, start, length);
                 currentUtilisateur.setType(type.charAt(0));

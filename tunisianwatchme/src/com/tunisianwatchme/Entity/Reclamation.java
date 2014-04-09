@@ -46,16 +46,7 @@ public class Reclamation {
         listCommentaire.addElement(commentaire);
     }    
 
-    public Vector getImages() {
-        System.out.println(listDocument.size());
-        Vector listPhoto = new Vector();
-        for (int i = 0; i < listDocument.size(); i++) {
-            if (((Document) listDocument.elementAt(i)).getType() == 1) {
-                listPhoto.addElement(((Document) listDocument.elementAt(i)).getImage());
-            }
-        }
-        return listPhoto;
-    }
+   
     
     public void addEvaluation(Evaluation ev) {
         listEvaluation.addElement(ev);

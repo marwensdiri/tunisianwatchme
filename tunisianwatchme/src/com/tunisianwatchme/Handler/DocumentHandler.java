@@ -18,11 +18,11 @@ import javax.microedition.lcdui.ImageItem;
  */
 public class DocumentHandler implements Runnable {
 
-    int id;
+    String image;
 
-    public DocumentHandler(int id) {
+    public DocumentHandler(String image) {
         try {
-            this.id = id;
+            this.image = image;
             Thread thr = new Thread(this);
             thr.start();
             thr.join();
@@ -41,7 +41,7 @@ public class DocumentHandler implements Runnable {
     
     public void run() {
         try {
-            String url = "http://localhost/tw_mobile/documents.php?id="+id;
+            String url = "http://localhost/tw_mobile/images/"+image;
             hc = (HttpConnection) Connector.open(url);
             dc = new DataInputStream(hc.openInputStream());
             int lengt = (int) hc.getLength();

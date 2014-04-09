@@ -1,10 +1,7 @@
 package com.tunisianwatchme.Gui;
 
-import com.tunisianwatchme.Entity.Reclamation;
 import com.tunisianwatchme.Handler.DocumentHandler;
-import com.tunisianwatchme.Handler.DomaineHandler;
 import com.tunisianwatchme.Handler.LoginHandler;
-import com.tunisianwatchme.Handler.ReclamationHandler;
 import de.enough.polish.ui.TextField;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
@@ -19,6 +16,7 @@ import javax.microedition.lcdui.StringItem;
 
 import javax.microedition.lcdui.CustomItem;
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.Image;
 
 /**
  * <p>
@@ -116,7 +114,7 @@ public class Midlet extends MIDlet implements CommandListener {
     protected void startApp() throws MIDletStateChangeException {
 
         d.setCurrent(this.menuScreen);
-
+       
     }
 
     protected void pauseApp() {

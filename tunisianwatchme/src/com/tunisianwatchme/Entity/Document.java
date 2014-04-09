@@ -10,7 +10,6 @@ public class Document {
     private String nom;
     private int type;
     private String url;
-    private Image image;
     private int idReclamation;
 
     public Document() {
@@ -19,7 +18,6 @@ public class Document {
 
     public Document(String nom, int type, Image image, int idReclamation) {
         this.type = type;
-        this.image = image;
         this.nom = nom;
         this.idReclamation = idReclamation;
     }
@@ -35,7 +33,6 @@ public class Document {
         this.id = id;
         this.type = type;
         this.url = url;
-        this.image = image;
         this.nom = nom;
         this.idReclamation = idReclamation;
     }
@@ -43,7 +40,6 @@ public class Document {
      public Document(int id,String nom, int type, Image image,int idReclamation) {
         this.id = id;
         this.type = type;
-        this.image = image;
         this.nom = nom;
         this.idReclamation = idReclamation;
     }
@@ -68,9 +64,7 @@ public class Document {
         this.nom = nom;
     }
 
-    public Image getImage() {
-        return image;
-    }
+   
 
     public void setId(int id) {
         this.id = id;
@@ -80,9 +74,7 @@ public class Document {
         this.url = url;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
-    }
+    
 
     public int getId() {
         return id;

@@ -21,7 +21,7 @@ public class Utilisateur {
     private char sexe;
     private String adress;
     private String dateNaissance;
-    private Image photo;
+    private String photo;
     private String login;
     private String mdp;
     private String mail;
@@ -64,11 +64,11 @@ public class Utilisateur {
         this.dateNaissance = dateNaissance;
     }
 
-    public Image getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Image photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
