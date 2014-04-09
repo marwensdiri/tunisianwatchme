@@ -71,10 +71,6 @@ public class Midlet extends MIDlet implements CommandListener {
         this.menuScreen.addCommand(this.cmdQuit);
         this.menuScreen.addCommand(this.log);
 
-        DocumentHandler doc = new DocumentHandler(13);
-        Image img9 = doc.getImg();
-        this.menuScreen.append(img9);
-
         this.menuScreen.addCommand(this.cmdQuit);
         this.menuScreen.addCommand(this.log);
 
@@ -206,5 +202,5 @@ public class Midlet extends MIDlet implements CommandListener {
             }
 
         }
-
+    }
 }
