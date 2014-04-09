@@ -19,7 +19,6 @@ import javax.microedition.lcdui.StringItem;
 
 import javax.microedition.lcdui.CustomItem;
 import javax.microedition.lcdui.Graphics;
-import javax.microedition.lcdui.Image;
 
 /**
  * <p>
@@ -35,6 +34,7 @@ public class Midlet extends MIDlet implements CommandListener {
     Display d;
     Form profil;
     Form menuScreen;
+    Form ajout;
     Command cmdQuit = new Command("Quit", Command.EXIT, 10);
     Command log = new Command("Login", Command.SCREEN, 10);
     Command logout = new Command("Logout", Command.SCREEN, 10);
@@ -75,6 +75,13 @@ public class Midlet extends MIDlet implements CommandListener {
         Image img9 = doc.getImg();
         this.menuScreen.append(img9);
 
+        this.menuScreen.addCommand(this.cmdQuit);
+        this.menuScreen.addCommand(this.log);
+
+        this.menuScreen.addCommand(this.cmdQuit);
+        this.menuScreen.addCommand(this.log);
+
+//Interface Profile 
         //#style profilBar
         profil = new Form("");
 
@@ -100,6 +107,14 @@ public class Midlet extends MIDlet implements CommandListener {
         profil.setCommandListener(this);
         profil.addCommand(this.logout);
         profil.addCommand(this.cmdQuit);
+
+        //Interface Ajout Réclamation 
+        ajout = new Form("");
+        
+        //style acceuilBar
+        this.ajout.append(img);
+        ajout.setCommandListener(this);
+
     }
 
     protected void startApp() throws MIDletStateChangeException {
@@ -191,6 +206,5 @@ public class Midlet extends MIDlet implements CommandListener {
             }
 
         }
-    }
 
 }
