@@ -22,6 +22,10 @@ public class Reclamation {
         
     }
     
+    public void addDoc(int id){
+        listDocument.addElement(new Integer(id));
+    }
+    
     public Vector getListCommentaire() {
         return listCommentaire;
     }

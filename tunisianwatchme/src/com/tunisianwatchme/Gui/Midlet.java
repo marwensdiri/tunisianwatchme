@@ -1,6 +1,10 @@
 package com.tunisianwatchme.Gui;
 
+import com.tunisianwatchme.Entity.Reclamation;
+import com.tunisianwatchme.Handler.DocumentHandler;
+import com.tunisianwatchme.Handler.DomaineHandler;
 import com.tunisianwatchme.Handler.LoginHandler;
+import com.tunisianwatchme.Handler.ReclamationHandler;
 import de.enough.polish.ui.TextField;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
@@ -13,13 +17,9 @@ import javax.microedition.midlet.MIDletStateChangeException;
 import javax.microedition.lcdui.Item;
 import javax.microedition.lcdui.StringItem;
 
-import de.enough.polish.ui.Style;
-import de.enough.polish.ui.StyleSheet;
-import de.enough.polish.ui.UiAccess;
 import javax.microedition.lcdui.CustomItem;
 import javax.microedition.lcdui.Graphics;
-import javax.microedition.lcdui.ItemCommandListener;
-import javax.microedition.lcdui.ItemStateListener;
+import javax.microedition.lcdui.Image;
 
 /**
  * <p>
@@ -70,6 +70,10 @@ public class Midlet extends MIDlet implements CommandListener {
 
         this.menuScreen.addCommand(this.cmdQuit);
         this.menuScreen.addCommand(this.log);
+
+        DocumentHandler doc = new DocumentHandler(13);
+        Image img9 = doc.getImg();
+        this.menuScreen.append(img9);
 
         //#style profilBar
         profil = new Form("");
@@ -181,6 +185,8 @@ public class Midlet extends MIDlet implements CommandListener {
                 LoginHandler loginHandler = new LoginHandler(field.getText(), field2.getText());
                 if (loginHandler.getCurrentUtilisateur() != null) {
                     d.setCurrent(profil);
+                } else {
+                    //Alert alert = new Alert(null, null, null, AlertType.INFO)
                 }
             }
 

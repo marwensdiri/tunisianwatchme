@@ -51,6 +51,8 @@ public class ReclamationHandler extends DefaultHandler implements Runnable {
 
     String descriptionTag = "close";
     String villeTag = "close";
+    
+    String iddocumentTag = "close";
 
     public ReclamationHandler() {
         try {
@@ -70,6 +72,7 @@ public class ReclamationHandler extends DefaultHandler implements Runnable {
     private Reclamation currentReclamation;
     private Commentaire currentComentaire;
 
+    
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         if (qName.equals("reclamation")) {
             if (currentReclamation != null) {
@@ -108,7 +111,9 @@ public class ReclamationHandler extends DefaultHandler implements Runnable {
             descriptionTag = "open";
         } else if (qName.equals("ville")) {
             villeTag = "open";
-        }
+        } else if (qName.equals("id-document")) {
+            iddocumentTag = "open";
+        }//iddocumentTag
     }
 
     public void endElement(String uri, String localName, String qName) throws SAXException {
@@ -149,8 +154,8 @@ public class ReclamationHandler extends DefaultHandler implements Runnable {
             descriptionTag = "close";
         } else if (qName.equals("ville")) {
             villeTag = "close";
-        } else if (qName.equals("")) {
-
+        } else if (qName.equals("id-document")) {
+            iddocumentTag = "close";
         }
     }
 
@@ -231,6 +236,9 @@ public class ReclamationHandler extends DefaultHandler implements Runnable {
                 String text = new String(ch, start, length);
                 currentComentaire.setDate(text);
                 currentReclamation.addCommentaires(currentComentaire);
+            } else if(iddocumentTag.equals("open")){
+                 String id = new String(ch, start, length);
+                currentReclamation.addDoc(Integer.parseInt(id));
             }
         }
     }
