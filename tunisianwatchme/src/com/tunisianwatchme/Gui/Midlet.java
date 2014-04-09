@@ -202,7 +202,7 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
             thr.start();
 
         }
-        /*if (d.getCurrent() == this.menuScreen && cmd == this.cmdQuit) {
+        /*............................................................if (d.getCurrent() == this.menuScreen && cmd == this.cmdQuit) {
          notifyDestroyed();
          }
          if (d.getCurrent() == this.profil && cmd == this.cmdQuit) {
