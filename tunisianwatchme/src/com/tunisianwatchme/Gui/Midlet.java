@@ -1,8 +1,11 @@
 package com.tunisianwatchme.Gui;
 
-import com.tunisianwatchme.Handler.DocumentHandler;
+
 import com.tunisianwatchme.Handler.LoginHandler;
+import de.enough.polish.ui.ChoiceGroup;
+import de.enough.polish.ui.DateField;
 import de.enough.polish.ui.TextField;
+import java.util.TimeZone;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
@@ -16,7 +19,7 @@ import javax.microedition.lcdui.StringItem;
 
 import javax.microedition.lcdui.CustomItem;
 import javax.microedition.lcdui.Graphics;
-import javax.microedition.lcdui.Image;
+import javax.microedition.lcdui.ItemCommandListener;
 
 /**
  * <p>
@@ -27,7 +30,7 @@ import javax.microedition.lcdui.Image;
  *
  * @author Robert Virkus, j2mepolish@enough.de
  */
-public class Midlet extends MIDlet implements CommandListener {
+public class Midlet extends MIDlet implements ItemCommandListener,CommandListener,Runnable {
 
     Display d;
     Form profil;
@@ -36,85 +39,126 @@ public class Midlet extends MIDlet implements CommandListener {
     Command cmdQuit = new Command("Quit", Command.EXIT, 10);
     Command log = new Command("Login", Command.SCREEN, 10);
     Command logout = new Command("Logout", Command.SCREEN, 10);
-    //  StringItem stringItem = new StringItem("", "", Item.BUTTON);
-    MyCustomItem stringItem = new MyCustomItem("");
 
-    TextField field = new TextField("", "UserName", 30, TextField.ANY);
-    TextField field2 = new TextField("", "****", 30, TextField.ANY);
+    StringItem loginItem = new StringItem("","",Item.BUTTON);
+    StringItem img = new StringItem("", "", Item.PLAIN);
+    StringItem space = new StringItem("", "", Item.PLAIN);
+    TextField Loginfield = new TextField("", "UserName", 30, TextField.ANY);
+    TextField Passfield = new TextField("", "****", 30, TextField.ANY);
+    StringItem img2 = new StringItem("", "                                                                            ", Item.LAYOUT_TOP);
+    StringItem fluxReclamationItem = new StringItem("", "                                                                            ", Item.BUTTON);
+    StringItem ajoutReclamationItem = new StringItem("", "                                                                            ", Item.BUTTON);
+    StringItem GeolocalisationItem = new StringItem("", "                                                                            ", Item.BUTTON);
+    StringItem StatItem = new StringItem("", "                                                                            ", Item.BUTTON);
+    Command test = new Command("test", Command.SCREEN, 10);
 
+    StringItem bar = new StringItem("", "", Item.PLAIN);
+    TextField titre = new TextField("Titre :", null, 30, TextField.ANY);
+    DateField date = new DateField("Date : ", DateField.DATE, TimeZone.getDefault());
+    ChoiceGroup domaine = new ChoiceGroup("Domaine", ChoiceGroup.POPUP);
+    ChoiceGroup lieu = new ChoiceGroup("Lieu", ChoiceGroup.POPUP);
+    DateField time = new DateField("Heure : ", DateField.TIME);
+    TextField desc = new TextField("Description :", null, 30, TextField.ANY);
+    Command cancel = new Command("cancel", Command.SCREEN, 10);
+    
+    
+    
     public Midlet() {
         super();
         d = Display.getDisplay(this);
+        
+        loginItem.addCommand(log);
+        loginItem.setItemCommandListener(this);
+        
         this.menuScreen = new Form("");
-
-        StringItem img = new StringItem("", "", Item.LAYOUT_TOP);
-        StringItem space = new StringItem("", "", Item.PLAIN);
-
         //#style mainScreen
         this.menuScreen.append(img);
 
         //#style textField
-        this.menuScreen.append(field);
+        this.menuScreen.append(Loginfield);
 
         //#style textField
-        this.menuScreen.append(field2);
+        this.menuScreen.append(Passfield);
 
         //#style br
         this.menuScreen.append(space);
 
         //#style loginPng
-        this.menuScreen.append(stringItem);
+        this.menuScreen.append(loginItem);
         this.menuScreen.setCommandListener(this);
 
         this.menuScreen.addCommand(this.cmdQuit);
         this.menuScreen.addCommand(this.log);
 
-        this.menuScreen.addCommand(this.cmdQuit);
-        this.menuScreen.addCommand(this.log);
-
-        this.menuScreen.addCommand(this.cmdQuit);
-        this.menuScreen.addCommand(this.log);
-
-//Interface Profile 
+///Interface Profile 
         //#style profilBar
         profil = new Form("");
 
-        StringItem img2 = new StringItem("", "                                                             ", Item.LAYOUT_TOP);
-        StringItem flux = new StringItem("", "                                                             ", Item.BUTTON);
-        StringItem flux1 = new StringItem("", "                                                             ", Item.BUTTON);
-        StringItem flux2 = new StringItem("", "                                                             ", Item.BUTTON);
-        StringItem flux3 = new StringItem("", "                                                             ", Item.BUTTON);
+        //#style br
+        profil.append(space);
+        //#style br
+        profil.append(space);
+        //#style br
+        profil.append(space);
+        //#style br
+        profil.append(space);
+        //#style br
+        profil.append(space);
 
-        profil.append(img2);
-        profil.append(img2);
-        profil.append(img2);
-        profil.append(img2);
-        profil.append(img2);
         //#style flux
-        profil.append(flux);
+        profil.append(fluxReclamationItem);
+       
+
         //#style flux1
-        profil.append(flux1);
+        profil.append(ajoutReclamationItem);
+
         //#style flux2
-        profil.append(flux2);
+        profil.append(GeolocalisationItem);
         //#style flux3
-        profil.append(flux3);
+        profil.append(StatItem);
+       
         profil.setCommandListener(this);
         profil.addCommand(this.logout);
+        profil.addCommand(this.test);
         profil.addCommand(this.cmdQuit);
 
-        //Interface Ajout Réclamation 
+//Interface Ajout Réclamation 
+        //#style acceuilBar
         ajout = new Form("");
-        
-        //style acceuilBar
-        this.ajout.append(img);
-        ajout.setCommandListener(this);
 
+        //#style br
+        ajout.append(space);
+        //#style br
+        ajout.append(space);
+        //#style br
+        ajout.append(space);
+        //#style br
+        ajout.append(space);
+
+        //#style dateField
+        ajout.append(titre);
+
+        //#style dateField
+        ajout.append(date);
+
+        //#style dateField
+        ajout.append(domaine);
+
+        //#style dateField
+        ajout.append(lieu);
+
+        //#style dateField
+        ajout.append(time);
+
+        //#style dateField
+        ajout.append(desc);
+
+        ajout.setCommandListener(this);
+        ajout.addCommand(cancel);
     }
 
     protected void startApp() throws MIDletStateChangeException {
-
         d.setCurrent(this.menuScreen);
-       
     }
 
     protected void pauseApp() {
@@ -125,13 +169,17 @@ public class Midlet extends MIDlet implements CommandListener {
 
     }
 
-    public void commandAction(Command cmd, Displayable screen) {
-        if (screen == this.menuScreen && cmd == this.log) {
-
-            d.setCurrent(this.profil);
-
+    public void commandAction(Command cmd, Item item ) {
+        if (item == this.loginItem && cmd == this.log) {
+            try {
+                Thread thr = new Thread(this);
+                thr.start();
+                thr.join();
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
         }
-        if (screen == this.menuScreen && cmd == this.cmdQuit) {
+        /*if (screen == this.menuScreen && cmd == this.cmdQuit) {
             notifyDestroyed();
         }
         if (screen == this.profil && cmd == this.cmdQuit) {
@@ -142,13 +190,43 @@ public class Midlet extends MIDlet implements CommandListener {
 
             d.setCurrent(menuScreen);
         }
+        if (screen == this.profil && cmd == this.test) {
+
+            d.setCurrent(ajout);
+        }
+        if (screen == this.ajout && cmd == this.cancel) {
+
+            d.setCurrent(profil);
+        }*/
     }
 
+    
+            public void run() {
+                System.out.println("aa");
+            if (d.getCurrent() == menuScreen ) {
+                System.out.println("bb");
+                LoginHandler loginHandler = new LoginHandler(Loginfield.getText(), Passfield.getText());
+                if (loginHandler.getCurrentUtilisateur() != null) {
+                    System.out.println("cc");
+                    d.setCurrent(profil);
+                }
+            }
+           else if( true) { 
+                    System.out.println("test");
+                }
+        
+        }
+    
     private void quit() throws MIDletStateChangeException {
 
     }
 
-    class MyCustomItem extends CustomItem implements Runnable {
+    public void commandAction(Command c, Displayable d) {
+    }
+
+    
+
+    class MyCustomItem extends CustomItem{
 
         int count = 0;
 
@@ -165,8 +243,7 @@ public class Midlet extends MIDlet implements CommandListener {
             //write ur code here to do stuff
 
             if (keyCode == -5) {
-                Thread thr = new Thread(this);
-                thr.start();
+                System.out.println("dd");
             }
         }
 
@@ -186,19 +263,11 @@ public class Midlet extends MIDlet implements CommandListener {
         protected int getPrefContentHeight(int width) {
             return 0;
         }
+        
+        
 
-        public void run() {
-            if (d.getCurrent() == menuScreen) {
 
-                System.out.println(field.getText());
-                LoginHandler loginHandler = new LoginHandler(field.getText(), field2.getText());
-                if (loginHandler.getCurrentUtilisateur() != null) {
-                    d.setCurrent(profil);
-                } else {
-                    //Alert alert = new Alert(null, null, null, AlertType.INFO)
-                }
-            }
 
-        }
     }
+
 }

@@ -101,7 +101,7 @@
 				</midlets>
 				<!-- project-wide variables - used for preprocessing  -->
 				<variables>
-					
+					<variable name="polish.Item.UseHoverStylesForTouchSystems" value="true" />
 					<variable name="polish.TextField.useDirectInput" value="true" />
 					<variable name="polish.TextField.supportSymbolsEntry" value="true" />
 				    <variable name="polish.TextField.showInputInfo" value="false" />
