@@ -1,14 +1,9 @@
 package com.tunisianwatchme.Gui;
 
-import com.tunisianwatchme.Entity.Reclamation;
-import com.tunisianwatchme.Handler.DocumentHandler;
-import com.tunisianwatchme.Handler.DomaineHandler;
+
 import com.tunisianwatchme.Handler.LoginHandler;
-import de.enough.polish.event.EventManager;
 import de.enough.polish.ui.ChoiceGroup;
 import de.enough.polish.ui.DateField;
-import de.enough.polish.ui.ItemStateListener;
-
 import de.enough.polish.ui.TextField;
 import java.util.TimeZone;
 import javax.microedition.lcdui.Display;
@@ -24,6 +19,7 @@ import javax.microedition.lcdui.StringItem;
 
 import javax.microedition.lcdui.CustomItem;
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.ItemCommandListener;
 
 /**
  * <p>
@@ -34,7 +30,7 @@ import javax.microedition.lcdui.Graphics;
  *
  * @author Robert Virkus, j2mepolish@enough.de
  */
-public class Midlet extends MIDlet implements CommandListener, ItemStateListener {
+public class Midlet extends MIDlet implements ItemCommandListener,CommandListener,Runnable {
 
     Display d;
     Form profil;
@@ -44,16 +40,16 @@ public class Midlet extends MIDlet implements CommandListener, ItemStateListener
     Command log = new Command("Login", Command.SCREEN, 10);
     Command logout = new Command("Logout", Command.SCREEN, 10);
 
-    MyCustomItem stringItem = new MyCustomItem("");
+    StringItem loginItem = new StringItem("","",Item.BUTTON);
     StringItem img = new StringItem("", "", Item.PLAIN);
     StringItem space = new StringItem("", "", Item.PLAIN);
-    TextField field = new TextField("", "UserName", 30, TextField.ANY);
-    TextField field2 = new TextField("", "****", 30, TextField.ANY);
+    TextField Loginfield = new TextField("", "UserName", 30, TextField.ANY);
+    TextField Passfield = new TextField("", "****", 30, TextField.ANY);
     StringItem img2 = new StringItem("", "                                                                            ", Item.LAYOUT_TOP);
-    StringItem flux = new StringItem("", "                                                                            ", Item.BUTTON);
-    StringItem flux1 = new StringItem("", "                                                                            ", Item.BUTTON);
-    StringItem flux2 = new StringItem("", "                                                                            ", Item.BUTTON);
-    StringItem flux3 = new StringItem("", "                                                                            ", Item.BUTTON);
+    StringItem fluxReclamationItem = new StringItem("", "                                                                            ", Item.BUTTON);
+    StringItem ajoutReclamationItem = new StringItem("", "                                                                            ", Item.BUTTON);
+    StringItem GeolocalisationItem = new StringItem("", "                                                                            ", Item.BUTTON);
+    StringItem StatItem = new StringItem("", "                                                                            ", Item.BUTTON);
     Command test = new Command("test", Command.SCREEN, 10);
 
     StringItem bar = new StringItem("", "", Item.PLAIN);
@@ -64,25 +60,31 @@ public class Midlet extends MIDlet implements CommandListener, ItemStateListener
     DateField time = new DateField("Heure : ", DateField.TIME);
     TextField desc = new TextField("Description :", null, 30, TextField.ANY);
     Command cancel = new Command("cancel", Command.SCREEN, 10);
-
+    
+    
+    
     public Midlet() {
         super();
         d = Display.getDisplay(this);
+        
+        loginItem.addCommand(log);
+        loginItem.setItemCommandListener(this);
+        
         this.menuScreen = new Form("");
         //#style mainScreen
         this.menuScreen.append(img);
 
         //#style textField
-        this.menuScreen.append(field);
+        this.menuScreen.append(Loginfield);
 
         //#style textField
-        this.menuScreen.append(field2);
+        this.menuScreen.append(Passfield);
 
         //#style br
         this.menuScreen.append(space);
 
         //#style loginPng
-        this.menuScreen.append(stringItem);
+        this.menuScreen.append(loginItem);
         this.menuScreen.setCommandListener(this);
 
         this.menuScreen.addCommand(this.cmdQuit);
@@ -104,16 +106,17 @@ public class Midlet extends MIDlet implements CommandListener, ItemStateListener
         profil.append(space);
 
         //#style flux
-        profil.append(flux);
+        profil.append(fluxReclamationItem);
+       
 
         //#style flux1
-        profil.append(flux1);
+        profil.append(ajoutReclamationItem);
 
         //#style flux2
-        profil.append(flux2);
+        profil.append(GeolocalisationItem);
         //#style flux3
-        profil.append(flux3);
-
+        profil.append(StatItem);
+       
         profil.setCommandListener(this);
         profil.addCommand(this.logout);
         profil.addCommand(this.test);
@@ -155,9 +158,7 @@ public class Midlet extends MIDlet implements CommandListener, ItemStateListener
     }
 
     protected void startApp() throws MIDletStateChangeException {
-
         d.setCurrent(this.menuScreen);
-
     }
 
     protected void pauseApp() {
@@ -168,13 +169,17 @@ public class Midlet extends MIDlet implements CommandListener, ItemStateListener
 
     }
 
-    public void commandAction(Command cmd, Displayable screen) {
-        if (screen == this.menuScreen && cmd == this.log) {
-
-            d.setCurrent(this.profil);
-
+    public void commandAction(Command cmd, Item item ) {
+        if (item == this.loginItem && cmd == this.log) {
+            try {
+                Thread thr = new Thread(this);
+                thr.start();
+                thr.join();
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
         }
-        if (screen == this.menuScreen && cmd == this.cmdQuit) {
+        /*if (screen == this.menuScreen && cmd == this.cmdQuit) {
             notifyDestroyed();
         }
         if (screen == this.profil && cmd == this.cmdQuit) {
@@ -192,18 +197,33 @@ public class Midlet extends MIDlet implements CommandListener, ItemStateListener
         if (screen == this.ajout && cmd == this.cancel) {
 
             d.setCurrent(profil);
-        }
+        }*/
     }
 
+    
+            public void run() {
+            if (d.getCurrent() == menuScreen ) {
+                LoginHandler loginHandler = new LoginHandler(Loginfield.getText(), Passfield.getText());
+                if (loginHandler.getCurrentUtilisateur() != null) {
+                    d.setCurrent(profil);
+                }
+            }
+           else if( true) { 
+                    System.out.println("test");
+                }
+        
+        }
+    
     private void quit() throws MIDletStateChangeException {
 
     }
 
-    public void itemStateChanged(de.enough.polish.ui.Item item) {
-
+    public void commandAction(Command c, Displayable d) {
     }
 
-    class MyCustomItem extends CustomItem implements Runnable {
+    
+
+    class MyCustomItem extends CustomItem{
 
         int count = 0;
 
@@ -220,8 +240,7 @@ public class Midlet extends MIDlet implements CommandListener, ItemStateListener
             //write ur code here to do stuff
 
             if (keyCode == -5) {
-                Thread thr = new Thread(this);
-                thr.start();
+                System.out.println("dd");
             }
         }
 
@@ -241,24 +260,10 @@ public class Midlet extends MIDlet implements CommandListener, ItemStateListener
         protected int getPrefContentHeight(int width) {
             return 0;
         }
+        
+        
 
-        public void run() {
-            if (d.getCurrent() == menuScreen) {
 
-                System.out.println(field.getText());
-                LoginHandler loginHandler = new LoginHandler(field.getText(), field2.getText());
-                if (loginHandler.getCurrentUtilisateur() != null) {
-                    d.setCurrent(profil);
-                } else {
-                    //Alert alert = new Alert(null, null, null, AlertType.INFO)
-                }
-            }
-            if (d.getCurrent() == profil) {
-
-                d.setCurrent(ajout);
-
-            }
-        }
 
     }
 
