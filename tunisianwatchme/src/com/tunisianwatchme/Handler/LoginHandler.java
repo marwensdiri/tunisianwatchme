@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.tunisianwatchme.Handler;
 
 import com.tunisianwatchme.Entity.Utilisateur;
@@ -11,7 +12,6 @@ import java.io.IOException;
 import java.util.Vector;
 import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
-import javax.microedition.lcdui.Image;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -21,12 +21,12 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /**
  *
- * @author MarwenSdiri <marwen.sdiri@esprit.tn>
+ * @author asd
  */
-public class UtilisateurHandler extends DefaultHandler implements Runnable {
+public class LoginHandler extends DefaultHandler implements Runnable{
 
-    Vector utilisateurVector;
-    private Utilisateur currentUtilisateur;
+    
+     private Utilisateur currentUtilisateur = null;
     String idTag = "close";
     String nomTag = "close";
     String prenomTag = "close";
@@ -38,14 +38,22 @@ public class UtilisateurHandler extends DefaultHandler implements Runnable {
     String mdpTag = "close";
     String mailTag = "close";
     String typeTag = "close";
-    int idUtilisateur;
-
-;
     
-    public UtilisateurHandler(int idUtilisateur) {
+    String login;
+    String password;
+
+    public Utilisateur getCurrentUtilisateur() {
+        return currentUtilisateur;
+    }
+    
+    
+    
+    public LoginHandler(String login,String password) {
         try {
-            this.idUtilisateur = idUtilisateur;
-            this.utilisateurVector = new Vector();
+            this.login = login;
+            this.password = password;
+            //this.login = "a";
+            //this.password = "f";
             Thread thr = new Thread(this);
             thr.start();
             thr.join();
@@ -54,20 +62,15 @@ public class UtilisateurHandler extends DefaultHandler implements Runnable {
         }
     }
     
-    
-
-    public Vector getUtilisateurVector() {
-        return utilisateurVector;
-    }
-
-    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         if (qName.equals("utilisateur")) {
 
             if (currentUtilisateur != null) {
                 throw new IllegalStateException("already processing a UtilisateurVector");
             }
-            currentUtilisateur = new Utilisateur();
+            
         } else if (qName.equals("id")) {
+            currentUtilisateur = new Utilisateur();
             idTag = "open";
         } else if (qName.equals("nom")) {
             nomTag = "open";
@@ -96,8 +99,7 @@ public class UtilisateurHandler extends DefaultHandler implements Runnable {
 
         if (qName.equals("utilisateur")) {
             // we are no longer processing a <reg.../> tag
-            utilisateurVector.addElement(currentUtilisateur);
-            currentUtilisateur = null;
+            
         } else if (qName.equals("id")) {
             idTag = "close";
         } else if (qName.equals("nom")) {
@@ -130,6 +132,7 @@ public class UtilisateurHandler extends DefaultHandler implements Runnable {
             if (idTag.equals("open")) {
                 String id = new String(ch, start, length).trim();
                 currentUtilisateur.setId(Integer.parseInt(id));
+                System.out.println("cccc");
             } else if (nomTag.equals("open")) {
                 String nom = new String(ch, start, length);
                 currentUtilisateur.setNom(nom);
@@ -166,7 +169,7 @@ public class UtilisateurHandler extends DefaultHandler implements Runnable {
             // get a parser object
             SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
             // get an InputStream from somewhere (could be HttpConnection, for example)
-            HttpConnection hc = (HttpConnection) Connector.open("http://localhost/tw_mobile/utilisateurs.php?type=select&id=" + idUtilisateur);
+            HttpConnection hc = (HttpConnection) Connector.open("http://localhost/tw_mobile/login.php?login="+login+"&password="+password);
             DataInputStream dis = new DataInputStream(hc.openDataInputStream());
             parser.parse(dis, this);
         } catch (ParserConfigurationException ex) {
@@ -177,5 +180,5 @@ public class UtilisateurHandler extends DefaultHandler implements Runnable {
             ex.printStackTrace();
         }
     }
-
+    
 }

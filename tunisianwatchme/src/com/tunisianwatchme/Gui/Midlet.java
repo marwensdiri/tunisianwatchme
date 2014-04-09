@@ -1,5 +1,6 @@
 package com.tunisianwatchme.Gui;
 
+import com.tunisianwatchme.Handler.LoginHandler;
 import de.enough.polish.ui.TextField;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
@@ -33,26 +34,20 @@ public class Midlet extends MIDlet implements CommandListener {
     Command cmdQuit = new Command("Quit", Command.EXIT, 10);
     Command log = new Command("Login", Command.SCREEN, 10);
     Command logout = new Command("Logout", Command.SCREEN, 10);
-    TextField field = new TextField("", "UserName", 30, TextField.ANY);
-
-    TextField field2 = new TextField("", "****", 30, TextField.PASSWORD);
-
-    StringItem img = new StringItem("", "", Item.LAYOUT_TOP);
-    StringItem acceuil_bar = new StringItem("", "", Item.LAYOUT_TOP);
-    StringItem space = new StringItem("", "", Item.PLAIN);
-
+    //  StringItem stringItem = new StringItem("", "", Item.BUTTON);
     MyCustomItem stringItem = new MyCustomItem("");
-    StringItem img2 = new StringItem("", "                                                                             ", Item.LAYOUT_TOP);
-    StringItem flux = new StringItem("", "                                                                             ", Item.BUTTON);
-    StringItem flux1 = new StringItem("", "                                                                             ", Item.BUTTON);
-    StringItem flux2 = new StringItem("", "                                                                             ", Item.BUTTON);
-    StringItem flux3 = new StringItem("", "                                                                             ", Item.BUTTON);
+
+    TextField field = new TextField("", "UserName", 30, TextField.ANY);
+    TextField field2 = new TextField("", "****", 30, TextField.ANY);
 
     public Midlet() {
         super();
         d = Display.getDisplay(this);
         this.menuScreen = new Form("");
-//  Interface Authentification 
+
+        StringItem img = new StringItem("", "", Item.LAYOUT_TOP);
+        StringItem space = new StringItem("", "", Item.PLAIN);
+
         //#style mainScreen
         this.menuScreen.append(img);
 
@@ -72,9 +67,18 @@ public class Midlet extends MIDlet implements CommandListener {
         this.menuScreen.addCommand(this.cmdQuit);
         this.menuScreen.addCommand(this.log);
 
+        this.menuScreen.addCommand(this.cmdQuit);
+        this.menuScreen.addCommand(this.log);
+
 //Interface Profile 
         //#style profilBar
         profil = new Form("");
+
+        StringItem img2 = new StringItem("", "                                                             ", Item.LAYOUT_TOP);
+        StringItem flux = new StringItem("", "                                                             ", Item.BUTTON);
+        StringItem flux1 = new StringItem("", "                                                             ", Item.BUTTON);
+        StringItem flux2 = new StringItem("", "                                                             ", Item.BUTTON);
+        StringItem flux3 = new StringItem("", "                                                             ", Item.BUTTON);
 
         profil.append(img2);
         profil.append(img2);
@@ -139,7 +143,7 @@ public class Midlet extends MIDlet implements CommandListener {
 
     }
 
-    class MyCustomItem extends CustomItem {
+    class MyCustomItem extends CustomItem implements Runnable {
 
         int count = 0;
 
@@ -152,12 +156,12 @@ public class Midlet extends MIDlet implements CommandListener {
             //Paint ur own stuff here
         }
 
-        protected void keyPressed(int keyCode ) {
-            
-            if ( keyCode == -5 ) {
-                count++;
-                System.out.println(count);
-                d.setCurrent(profil);
+        protected void keyPressed(int keyCode) {
+            //write ur code here to do stuff
+
+            if (keyCode == -5) {
+                Thread thr = new Thread(this);
+                thr.start();
             }
         }
 
@@ -178,6 +182,18 @@ public class Midlet extends MIDlet implements CommandListener {
             return 0;
         }
 
-    }
+        public void run() {
+            if (d.getCurrent() == menuScreen) {
+
+                System.out.println(field.getText());
+                LoginHandler loginHandler = new LoginHandler(field.getText(), field2.getText());
+                if (loginHandler.getCurrentUtilisateur() != null) {
+                    d.setCurrent(profil);
+                }
+            }
+
+        }
+
+}
 
 }

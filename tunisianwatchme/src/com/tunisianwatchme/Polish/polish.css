@@ -30,6 +30,7 @@ background {
 	background-image : url( acceuil_bar.png ) ;
 	anchor: left | top ;
 }
+}
 .flux {
         
         padding-bottom: 7% ;
