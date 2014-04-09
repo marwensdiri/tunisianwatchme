@@ -1,5 +1,8 @@
 package com.tunisianwatchme.Gui;
 
+import com.tunisianwatchme.Entity.Reclamation;
+import com.tunisianwatchme.Handler.DocumentHandler;
+import com.tunisianwatchme.Handler.DomaineHandler;
 import com.tunisianwatchme.Handler.LoginHandler;
 import de.enough.polish.event.EventManager;
 import de.enough.polish.ui.ChoiceGroup;
@@ -246,6 +249,8 @@ public class Midlet extends MIDlet implements CommandListener, ItemStateListener
                 LoginHandler loginHandler = new LoginHandler(field.getText(), field2.getText());
                 if (loginHandler.getCurrentUtilisateur() != null) {
                     d.setCurrent(profil);
+                } else {
+                    //Alert alert = new Alert(null, null, null, AlertType.INFO)
                 }
             }
             if (d.getCurrent() == profil) {
