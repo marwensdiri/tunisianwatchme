@@ -1,6 +1,28 @@
 title {
 }
+colors {
+	bgColor:  rgb(90,121,239);
+	brightBgColor:  rgb(165,190,247);
+	brightFontColor: white;
+	fontColor: rgb( 66, 85, 148 ); 
+	translucentBgColor:  argb(130, 165,190,247);
+}
 
+
+backgrounds {
+	triangleUp {
+		type: triangle;
+		orientation: top;
+		color: #770;
+	}
+	
+	triangleDown {
+		type: triangle;
+		orientation: bottom;
+		color: #770;
+	}
+	
+}
 
 
 /*************    midlet Profil          ***************************************************************************************************/
@@ -27,8 +49,9 @@ background {
 .acceuilBar {
 	
 	background {
-	background-image : url( acceuil_bar.png ) ;
+	background-image : url( accueil_bar.png ) ;
 	anchor: left | top ;
+        
 }
 }
 .flux {
@@ -45,7 +68,17 @@ background {
 		
   } 
   
-
+.flux:hover {
+       
+		padding-bottom: 7% ;
+		background-image : url(flux_p.png);
+		background-color : #A0A0A0 ; 
+		border {
+		type: round-rect;
+		color: black;
+		arc: 10;
+	}
+	}
 
 .flux:pressed {
        
@@ -75,7 +108,17 @@ background {
 		
   } 
 
-
+.flux1:hover {
+       
+		padding-bottom: 7% ;
+		background-image : url(flux1_p.png);
+		background-color : #A0A0A0 ; 
+		border {
+		type: round-rect;
+		color: black;
+		arc: 10;
+	}
+	}
 
 .flux1:pressed {
         
@@ -103,7 +146,18 @@ background {
 		background-color : #DC1F28 ; 
 		
   } 
-
+.flux2:hover {
+       
+		padding-bottom: 7% ;
+		background-image : url(flux2_p.png);
+		background-color : #A0A0A0 ; 
+		border {
+		type: round-rect;
+		color: black;
+		arc: 10;
+	}
+	}
+        
 .flux2:pressed {
         
 		padding-bottom: 7% ;
@@ -131,6 +185,18 @@ background {
 	}
   } 
 
+  .flux3:hover {
+       
+		padding-bottom: 7% ;
+		background-image : url(flux3_p.png);
+		background-color : #A0A0A0 ; 
+		border {
+		type: round-rect;
+		color: black;
+		arc: 10;
+	}
+	}
+        
 .flux3:pressed {
         
 	padding-bottom: 7% ;
@@ -166,7 +232,7 @@ padding-bottom : 40% ;
 
 .br {
        
-       margin : 0,5% ; 	   
+       margin : 0,3% ; 	   
 
  }
 .textField {
@@ -197,7 +263,7 @@ padding-top: 10% ;
 .loginPng:hover {
 padding-top: 10% ;
 padding-bottom: 10% ;
-	background-image: url(login.png);
+	background-image: url(login_p.png);
 	layout: horizontal-center ;
 }
 
@@ -215,6 +281,25 @@ label {
 	text-effect: shadow;
 	text-shadow-color: #333;
 }
+
+
+.dateField {
+	margin-top: 4px;
+	padding: 2px;
+	background-color: silver;
+	font-color: #333;
+	font-size: large;
+	layout: expand;
+}
+
+.dateField:hover {
+	padding: 1px;
+	background-color: white;
+	border-color: black;
+	font-color: black;
+}
+
+
 
 
 /*************    Scrollbar          ***************************************************************************************************/
@@ -308,7 +393,85 @@ menuItem:hover {
 }
 
 
+/************ calendar and time entry styles *************************************************/
 
+.calendarForm {
+	background {
+		type: vertical-gradient;
+		top-color: white;
+		bottom-color: #aaa;
+		start: 70%;
+		end: 100%;
+	}
+	layout: hcenter | top;
+	padding-top: 3px;
+}
+
+.calendar {
+	layout: expand;
+	label-style: calendarMonth;
+}
+
+.calendar:hover {
+}
+
+.calendarMonth {
+	font-color: #222;
+	font-style: bold;
+	font-size: small;
+	before: url( arrow-left.png );
+	after: url( arrow-right.png );
+	layout: expand | center;
+}
+
+.calendarWeekday {
+	layout: center;
+	font-style: italic | bold;
+	min-width: 12%;
+}
+
+.calendarDay {
+	padding: 2px;
+	font-style: italic;
+	font-color: #222;
+	layout: right;
+}
+
+.calendarDay:hover {
+	background-color: #222;
+	font-color: #efefef;
+}
+
+.calendarCurrentday extends .calendarDay {
+	background-color: #8f8;
+}
+
+.calendarCurrentday:hover {
+	background-color: #1a1;
+	font-color: #fff;
+}
+
+.calendarDayInactive extends .calendarDay {
+	font-color: #666;
+}
+
+.calendarDayInactive:hover {
+	background-color: #666;
+	font-color: #fff;
+}
+
+.time {
+	font-color: #666;
+	font-size: large;
+	time-arrow-up: triangleUp;
+	time-arrow-down: triangleDown;
+	time-arrow-width: 60px;
+	layout: center;
+}
+
+.time:hover {
+	font-color: #222;
+}
 
 
 
