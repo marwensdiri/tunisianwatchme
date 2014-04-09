@@ -70,6 +70,9 @@ public class Midlet extends MIDlet implements CommandListener {
         this.menuScreen.addCommand(this.cmdQuit);
         this.menuScreen.addCommand(this.log);
 
+        this.menuScreen.addCommand(this.cmdQuit);
+        this.menuScreen.addCommand(this.log);
+
 //Interface Profile 
         //#style profilBar
         profil = new Form("");
@@ -193,7 +196,5 @@ public class Midlet extends MIDlet implements CommandListener {
             }
 
         }
-
-}
 
 }
