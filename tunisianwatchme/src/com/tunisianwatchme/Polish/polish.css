@@ -6,6 +6,8 @@ colors {
 	brightFontColor: white;
 	fontColor: rgb( 66, 85, 148 ); 
 	translucentBgColor:  argb(130, 165,190,247);
+        focusedBgColor:  rgb(238,241,229);
+        focusedFontColor: rgb(238,241,229);
 }
 
 
@@ -20,6 +22,10 @@ backgrounds {
 		type: triangle;
 		orientation: bottom;
 		color: #770;
+	}
+        chartItemBackground {
+		type: round-rect-translucent;
+		color: #9fff;
 	}
 	
 }
@@ -213,6 +219,56 @@ background {
 
 
 /************ main screen *************************************************/
+.test {
+	padding: 5;
+	padding-left: 15;
+	padding-right: 15;
+	layout: horizontal-expand | horizontal-center | top;
+	background{
+		image: url( tile.png );
+		repeat: repeat;
+		top: title;
+		bottom: menubar;
+		overlap: true;
+	}
+}
+
+
+.lineChart {
+	background: chartItemBackground;
+	padding: 3;
+	font-color: gray;
+	font-size: small;
+}
+
+.verticalBarChart {
+	background: chartItemBackground;
+	padding: 3;
+	view-type: chart-vertical-bars;
+	chart-vertical-bars-shadow-color: gray;
+}
+
+.pieChart {
+	background: chartItemBackground;
+	padding: 3;
+	view-type: chart-pie;
+}
+
+focused {
+	padding: 1;
+	border {
+		type: round-rect;
+		arc: 4;
+		border-color: fontColor;
+		border-width: 2;
+	}
+	font {
+		style: bold;
+		color: fontColor;
+		size: small;
+	}
+	layout: expand | left;	
+}
 
 
 .mainScreen {
