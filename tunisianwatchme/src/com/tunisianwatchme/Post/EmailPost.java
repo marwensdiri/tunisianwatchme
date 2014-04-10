@@ -26,7 +26,7 @@ public class EmailPost extends Thread {
     String url = null;
     
     public EmailPost(String sujet,String msg ,String mail) {
-        this.texte = texte;
+        this.texte = msg;
         this.mail = mail;
         this.sujet = sujet;
     }

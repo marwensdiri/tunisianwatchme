@@ -298,6 +298,7 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
         infoReclamation.append(heureReclamation);
         infoReclamation.append(domaineReclamation);
         infoReclamation.addCommand(cancel);
+        infoReclamation.setCommandListener(this);
 
         //interface de mail
         mailForm = new Form("");
@@ -549,6 +550,8 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
                                     EmailPost emailPost = new EmailPost(sujetMail.getText(), msgMail.getText(), user.getMail());
                                     emailPost.start();
                                     emailPost.join();
+                                    Alert alert = new Alert("mail envoyee", "mail envoyee avec succees", null, AlertType.INFO);
+                                    d.setCurrent(alert);
                                 } catch (InterruptedException ex) {
                                     ex.printStackTrace();
                                 }
