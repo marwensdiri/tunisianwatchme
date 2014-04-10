@@ -121,7 +121,7 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
     TextField adresse = new TextField("Adresse :", null, 30, TextField.ANY);
 
     Form mailForm;
-    ChoiceGroup lisrResp = new ChoiceGroup("Utilisateur", ChoiceGroup.EXCLUSIVE);
+    ChoiceGroup lisrResp = new ChoiceGroup("Utilisateur", ChoiceGroup.POPUP);
     TextField sujetMail = new TextField("Sujet", "", 50, TextField.ANY);
     TextField msgMail = new TextField("Méssage", "", 50, TextField.ANY);
 
@@ -185,12 +185,12 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
         //#style flux1
         profil.append(ajoutReclamationItem);
 
-        //#style flux3
-        profil.append(StatItem);
         //#style flux2
+        profil.append(StatItem);
+        //#style flux3
         profil.append(profilItem);
 
-        //#style flux
+        //#style flux4
         profil.append(mailItem);
 
         profil.setCommandListener(this);
@@ -249,12 +249,6 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
         //#style modifierBar
         mProfil = new Form("");
 
-        //#style modifierBar
-        mProfil.append(space);
-        //#style modifierBar
-        mProfil.append(space);
-        //#style modifierBar
-        mProfil.append(space);
         //#style br
         mProfil.append(space);
         //#style br
@@ -264,44 +258,74 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
         //#style br
         mProfil.append(space);
 
-        //#style datefield
+        //#style dateField
         mProfil.append(nom);
-        //#style datefield
+        //#style dateField
         mProfil.append(prenom);
-        //#style datefield
+        //#style dateField
         mProfil.append(login);
-        //#style datefield
+        //#style dateField
         mProfil.append(sexe);
-        //#style datefield
+        //#style dateField
         mProfil.append(email);
-        //#style datefield
+        //#style dateField
         mProfil.append(dateP);
-        //#style datefield
+        //#style dateField
         mProfil.append(adresse);
         mProfil.setCommandListener(this);
         mProfil.addCommand(cancel);
         mProfil.addCommand(submit);
 
         //interface de la liste des réclamations
+        //#style list
         listReclamations = new List("", List.IMPLICIT);
+
         //listReclamations.addCommand(select);
         listReclamations.addCommand(cancel);
         listReclamations.setCommandListener(this);
 
         //interface d'information d'une réclamation
+        //#style news
         infoReclamation = new Form("");
+        //#style br
+        infoReclamation.append(space);
+        //#style br
+        infoReclamation.append(space);
+        //#style br
+        infoReclamation.append(space);
+        //#style br
+        infoReclamation.append(space);
+        //#style dateField
         infoReclamation.append(titreReclamation);
+        //#style dateField
         infoReclamation.append(descriptionReclamation);
+        //#style dateField
         infoReclamation.append(lieuReclamation);
+        //#style dateField
         infoReclamation.append(citoyenReclamation);
+        //#style dateField
         infoReclamation.append(dateReclamation);
+        //#style dateField
         infoReclamation.append(heureReclamation);
+        //#style dateField
         infoReclamation.append(domaineReclamation);
+        //#style dateField
         infoReclamation.addCommand(cancel);
+
         infoReclamation.setCommandListener(this);
 
         //interface de mail
+        //#style mail
         mailForm = new Form("");
+        //#style br
+        mailForm.append(space);
+         //#style br
+        mailForm.append(space);
+        //#style br
+        mailForm.append(space);
+        //#style br
+        mailForm.append(space);
+        //#style br
         mailForm.append(lisrResp);
         mailForm.append(sujetMail);
         mailForm.append(msgMail);
@@ -360,7 +384,17 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
 
             thr.start();
         } else if (item == this.StatItem && cmd == this.select) {
-            Thread thr = new Thread(this);
+            Thread thr = new Thread(new Runnable() {
+
+                public void run() {
+                    StatHandler sh1 = new StatHandler('l');
+                    StatHandler sh2 = new StatHandler('e');
+                    StatHandler sh3 = new StatHandler('d');
+                    v1 = sh1.getstatVector();
+                    v2 = sh2.getstatVector();
+                    v3 = sh3.getstatVector();
+                }
+            });
             thr.start();
             updateChart();
             d.setCurrent(StatForm);
@@ -435,14 +469,6 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
             ReclamationPost rp = new ReclamationPost(reclamation, 1);
             rp.start();
             // Alert alertSuccess = new Alert
-
-        } else if (d.getCurrent() == profil && type.equals("chargement-stat")) {
-            StatHandler sh1 = new StatHandler('l');
-            StatHandler sh2 = new StatHandler('e');
-            StatHandler sh3 = new StatHandler('d');
-            v1 = sh1.getstatVector();
-            v2 = sh2.getstatVector();
-            v3 = sh3.getstatVector();
 
         }
 
@@ -538,34 +564,33 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
             d.setCurrent(infoReclamation);
         } else if (disp == mailForm && c == submit) {
             System.out.println("aaa");
-           //if (!sujetMail.getText().equals("") && !msgMail.getText().equals("")) {
-                for (int i = 0; i < uh.getUtilisateurVector().size(); i++) {
-                   user = (Utilisateur) uh.getUtilisateurVector().elementAt(i);
-                    if(user.getNom().equals(lisrResp.getString(lisrResp.getSelectedIndex())))
-                    {
-                        Thread thr = new Thread(new Runnable() {
+            //if (!sujetMail.getText().equals("") && !msgMail.getText().equals("")) {
+            for (int i = 0; i < uh.getUtilisateurVector().size(); i++) {
+                user = (Utilisateur) uh.getUtilisateurVector().elementAt(i);
+                if (user.getNom().equals(lisrResp.getString(lisrResp.getSelectedIndex()))) {
+                    Thread thr = new Thread(new Runnable() {
 
-                            public void run() {
-                                try {
-                                    EmailPost emailPost = new EmailPost(sujetMail.getText(), msgMail.getText(), user.getMail());
-                                    emailPost.start();
-                                    emailPost.join();
-                                    Alert alert = new Alert("mail envoyee", "mail envoyee avec succees", null, AlertType.INFO);
-                                    d.setCurrent(alert);
-                                } catch (InterruptedException ex) {
-                                    ex.printStackTrace();
-                                }
+                        public void run() {
+                            try {
+                                EmailPost emailPost = new EmailPost(sujetMail.getText(), msgMail.getText(), user.getMail());
+                                emailPost.start();
+                                emailPost.join();
+                                Alert alert = new Alert("mail envoyee", "mail envoyee avec succees", null, AlertType.INFO);
+                                d.setCurrent(alert);
+                            } catch (InterruptedException ex) {
+                                ex.printStackTrace();
                             }
-                        });
-                        
-                        thr.start();
-                        break;
-                    }
+                        }
+                    });
+
+                    thr.start();
+                    break;
                 }
-           // }
+            }
+            // }
         }
     }
-    
+
     Utilisateur user;
 
     private void updateChart() {

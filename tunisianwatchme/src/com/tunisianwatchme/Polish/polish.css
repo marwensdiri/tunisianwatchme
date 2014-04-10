@@ -74,6 +74,29 @@ background {
 }
 
 
+.news {
+	
+	background {
+	background-image : url( news.png ) ;
+	anchor : left | top ;
+        padding-bottom: 7% ;
+        color : #DC1F28 ; 
+}
+
+}
+
+.mail {
+	
+	background {
+	background-image : url( mail.png ) ;
+	anchor : left | top ;
+        padding-bottom: 7% ;
+        color : #DC1F28 ; 
+}
+
+}
+
+
 .flux {
         
         padding-bottom: 7% ;
@@ -230,6 +253,46 @@ background {
 	}
 		
   } 
+  
+  .flux4{
+        padding-bottom: 7% ;
+			background-image : url( flux4.png );
+			
+		layout: horizontal-center   ;
+		background-color : #DC1F28 ; 
+		border {
+		type: round-rect;
+		color: black;
+		arc: 10;
+	}
+  } 
+
+  .flux4:hover {
+       
+		padding-bottom: 7% ;
+		background-image : url(flux4_p.png);
+		background-color : #A0A0A0 ; 
+		border {
+		type: round-rect;
+		color: black;
+		arc: 10;
+	}
+	}
+        
+.flux4:pressed {
+        
+	padding-bottom: 7% ;
+		layout: horizontal-center ;
+		background-image : url( flux4_p.png );
+		background-color : #A0A0A0 ; 
+		border {
+		type: round-rect;
+		color: black;
+		arc: 10;
+	}
+		
+  } 
+
 
 
 /************ main screen *************************************************/
@@ -303,7 +366,7 @@ padding-bottom : 40% ;
 
 .br {
        
-       margin : 0,3% ; 	   
+       margin : 0.5% ; 	   
 
  }
 .textField {
@@ -316,6 +379,24 @@ padding-bottom : 40% ;
 	layout: horizontal-center | horizontal-expand;
 	margin-left: 10%;
 	margin-right: 10%;
+}
+
+.list {
+	
+	
+	
+	background {
+	background-image : url( news.png ) ;
+	anchor : left | top ;
+        padding-bottom: 7% ;
+        margin-bottom: 7% ;
+        
+        color : #DC1F28 ; 
+}
+	
+
+	layout:  horizontal-center | horizontal-expand;
+	
 }
 
 .textField:hover {
