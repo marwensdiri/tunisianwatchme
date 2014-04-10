@@ -57,9 +57,23 @@ background {
 	background {
 	background-image : url( accueil_bar.png ) ;
 	anchor: left | top ;
+        color : #DC1F28 ; 
         
 }
 }
+
+.modifierBar {
+	
+	background {
+	background-image : url( modifierl.png ) ;
+	anchor : left | top ;
+        padding-bottom: 7% ;
+        color : #DC1F28 ; 
+}
+
+}
+
+
 .flux {
         
         padding-bottom: 7% ;
@@ -231,7 +245,8 @@ background {
 		bottom: menubar;
 		overlap: true;
 	}
-}
+} 
+
 
 
 .lineChart {

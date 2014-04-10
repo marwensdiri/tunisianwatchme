@@ -9,14 +9,18 @@ import com.tunisianwatchme.Entity.Utilisateur;
 import com.tunisianwatchme.Handler.DomaineHandler;
 import com.tunisianwatchme.Handler.LieuHandler;
 import com.tunisianwatchme.Handler.LoginHandler;
+import com.tunisianwatchme.Handler.ReclamationHandler;
 import com.tunisianwatchme.Handler.StatHandler;
 import com.tunisianwatchme.Post.ReclamationPost;
+import com.tunisianwatchme.Post.UtilisateurPost;
 import de.enough.polish.ui.ChartItem;
 import de.enough.polish.ui.DateField;
 import de.enough.polish.ui.Style;
 import de.enough.polish.ui.TextField;
 import de.enough.polish.ui.UiAccess;
 import java.util.TimeZone;
+import javax.microedition.lcdui.Alert;
+import javax.microedition.lcdui.AlertType;
 import javax.microedition.lcdui.ChoiceGroup;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
@@ -28,6 +32,7 @@ import javax.microedition.midlet.MIDletStateChangeException;
 
 import javax.microedition.lcdui.Item;
 import javax.microedition.lcdui.ItemCommandListener;
+import javax.microedition.lcdui.List;
 import javax.microedition.lcdui.StringItem;
 
 /**
@@ -46,6 +51,10 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
     Form profil;
     Form menuScreen;
     Form ajout;
+    Form mProfil;
+    List listReclamations;
+    Form infoReclamation;
+
     //Command cmdQuit = new Command("Quit", Command.EXIT, 10);
     Command log = new Command("Login", Command.SCREEN, 10);
 
@@ -63,13 +72,13 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
     StringItem img2 = new StringItem("", "                                                                            ", Item.LAYOUT_TOP);
     StringItem fluxReclamationItem = new StringItem("", "                                                                            ", Item.BUTTON);
     StringItem ajoutReclamationItem = new StringItem("", "                                                                            ", Item.BUTTON);
-    StringItem GeolocalisationItem = new StringItem("", "                                                                            ", Item.BUTTON);
+    StringItem profilItem = new StringItem("", "                                                                            ", Item.BUTTON);
     StringItem StatItem = new StringItem("", "                                                                            ", Item.BUTTON);
 
     StringItem bar = new StringItem("", "", Item.PLAIN);
     TextField titre = new TextField("Titre :", null, 30, TextField.ANY);
     DateField date = new DateField("Date : ", DateField.DATE, TimeZone.getDefault());
-    ChoiceGroup domaine = new ChoiceGroup("Domaine", ChoiceGroup.POPUP);
+    ChoiceGroup domaine = new ChoiceGroup("Domaine :", ChoiceGroup.POPUP);
     ChoiceGroup lieu = new ChoiceGroup("Lieu", ChoiceGroup.POPUP);
     DateField time = new DateField("Heure : ", DateField.TIME);
     TextField desc = new TextField("Description :", null, 30, TextField.ANY);
@@ -77,8 +86,14 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
 
     String type;
 
+    StringItem titreReclamation = new StringItem("titre", "");
+    StringItem descriptionReclamation = new StringItem("description", "");
+    StringItem dateReclamation = new StringItem("date", "");
+    StringItem citoyenReclamation = new StringItem("citoyen", "");
+    StringItem domaineReclamation = new StringItem("domaine", "");
+    StringItem lieuReclamation = new StringItem("lieu", "");
+
     private Form StatForm;
-    private Command exitCommand = new Command("Exit", Command.EXIT, 3);
     private Command styleLines = new Command("Lines", Command.SCREEN, 1);
     private Command styleVerticalBar = new Command("Vertical Bars", Command.SCREEN, 1);
     private Command stylePieChart = new Command("Pie Chart", Command.SCREEN, 1);
@@ -87,6 +102,15 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
     Vector v3;
     DomaineHandler dh;
     LieuHandler lh;
+    ReclamationHandler rh;
+
+    TextField nom = new TextField("Nom :", null, 30, TextField.ANY);
+    TextField prenom = new TextField("Prenom :", null, 30, TextField.ANY);
+    TextField login = new TextField("Login :", null, 30, TextField.ANY);
+    ChoiceGroup sexe = new ChoiceGroup("Sexe :", ChoiceGroup.POPUP);
+    TextField email = new TextField("Email :", null, 30, TextField.EMAILADDR);
+    DateField dateP = new DateField("Date : ", DateField.DATE, TimeZone.getDefault());
+    TextField adresse = new TextField("Adresse :", null, 30, TextField.ANY);
 
     public Midlet() {
         super();
@@ -101,10 +125,8 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
         fluxReclamationItem.setItemCommandListener(this);
         ajoutReclamationItem.addCommand(select);
         ajoutReclamationItem.setItemCommandListener(this);
-        GeolocalisationItem.addCommand(select);
-        GeolocalisationItem.setItemCommandListener(this);
-        StatItem.addCommand(select);
-        StatItem.setItemCommandListener(this);
+        profilItem.addCommand(select);
+        profilItem.setItemCommandListener(this);
 
         this.menuScreen = new Form("");
         //#style mainScreen
@@ -115,8 +137,6 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
 
         //#style textField
         this.menuScreen.append(Passfield);
-
-        
 
         //#style loginPng
         this.menuScreen.append(loginItem);
@@ -146,11 +166,10 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
         //#style flux1
         profil.append(ajoutReclamationItem);
 
-        
         //#style flux3
         profil.append(StatItem);
         //#style flux2
-        profil.append(GeolocalisationItem);
+        profil.append(profilItem);
 
         profil.setCommandListener(this);
         profil.addCommand(this.logout);
@@ -196,7 +215,7 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
         //Interface Statistiques
         //#style test
         this.StatForm = new Form("Statistiques");
-        this.StatForm.addCommand(this.exitCommand);
+        this.StatForm.addCommand(cancel);
         Command parent = new Command("selectionnez type", Command.SCREEN, 2);
         this.StatForm.addCommand(parent);
         UiAccess.addSubCommand(this.styleLines, parent, this.StatForm);
@@ -204,6 +223,60 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
         UiAccess.addSubCommand(this.stylePieChart, parent, this.StatForm);
         this.StatForm.setCommandListener(this);
 
+        //Interface Modifier Profile 
+        //#style modifierBar
+        mProfil = new Form("");
+
+        //#style modifierBar
+        mProfil.append(space);
+        //#style modifierBar
+        mProfil.append(space);
+        //#style modifierBar
+        mProfil.append(space);
+        //#style br
+        mProfil.append(space);
+        //#style br
+        mProfil.append(space);
+        //#style br
+        mProfil.append(space);
+        //#style br
+        mProfil.append(space);
+
+        //#style datefield
+        mProfil.append(nom);
+        //#style datefield
+        mProfil.append(prenom);
+        //#style datefield
+        mProfil.append(login);
+        //#style datefield
+        mProfil.append(sexe);
+        //#style datefield
+        mProfil.append(email);
+        //#style datefield
+        mProfil.append(dateP);
+        //#style datefield
+        mProfil.append(adresse);
+        mProfil.setCommandListener(this);
+        mProfil.addCommand(cancel);
+        mProfil.addCommand(submit);
+
+        //interface de la liste des réclamations
+        listReclamations = new List("", List.IMPLICIT);
+        listReclamations.addCommand(select);
+        listReclamations.addCommand(cancel);
+        listReclamations.setCommandListener(this);
+
+        //interface d'information d'une réclamation
+        infoReclamation = new Form("");
+        infoReclamation.append(titreReclamation);
+        infoReclamation.append(descriptionReclamation);
+        infoReclamation.append(lieuReclamation);
+        infoReclamation.append(citoyenReclamation);
+        infoReclamation.append(dateReclamation);
+        infoReclamation.append(domaineReclamation);
+        
+        infoReclamation.addCommand(cancel);
+        
     }
 
     protected void startApp() throws MIDletStateChangeException {
@@ -223,21 +296,54 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
             Thread thr = new Thread(this);
             thr.start();
         } else if (item == this.fluxReclamationItem && cmd == this.select) {
+            Thread thr = new Thread(new Runnable() {
 
+                public void run() {
+                    rh = new ReclamationHandler();
+                    rh.getReclamation();
+                    for (int i = 0; i < rh.getReclamation().size(); i++) {
+                        Reclamation reclamation = (Reclamation) rh.getReclamation().elementAt(i);
+                        listReclamations.append(reclamation.toString(), null);
+                    }
+                }
+            });
+
+            thr.start();
+            d.setCurrent(listReclamations);
         } else if (item == this.ajoutReclamationItem && cmd == this.select) {
             type = "ajout";
             Thread thr = new Thread(this);
             thr.start();
-        } else if (cmd == this.exitCommand) {
-            notifyDestroyed();
         } else if (item == this.StatItem && cmd == this.select) {
-            System.out.println("success");
-            type = "chargement-stat";
             Thread thr = new Thread(this);
             thr.start();
-         updateChart();
-           
+            updateChart();
             d.setCurrent(StatForm);
+        } else if (item == this.profilItem && cmd == this.select) {
+            System.out.println("success");
+            type = "modifier-profil";
+            Thread thr = new Thread(new Runnable() {
+
+                public void run() {
+
+                    nom.setText(me.getNom());
+                    prenom.setText(me.getPrenom());
+                    login.setText(me.getLogin());
+                    sexe.append("Homme", null);
+                    sexe.append("Femme", null);
+                    if (me.getSexe() == 'H') {
+                        sexe.setSelectedIndex(0, true);
+                    } else {
+                        sexe.setSelectedIndex(1, true);
+                    }
+                    email.setText(me.getMail());
+                    adresse.setText(me.getAdress());
+
+                }
+            });
+            thr.start();
+
+            d.setCurrent(mProfil);
         }
         /*............................................................if (d.getCurrent() == this.menuScreen && cmd == this.cmdQuit) {
          notifyDestroyed();
@@ -311,7 +417,7 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
             v1 = sh1.getstatVector();
             v2 = sh2.getstatVector();
             v3 = sh3.getstatVector();
-             
+
         }
 
     }
@@ -327,14 +433,14 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
             type = "submit";
             Thread thr = new Thread(this);
             thr.start();
-        } else if (disp == ajout && c == cancel) {
+        } else if (c == cancel) {
             d.setCurrent(profil);
         } else if (disp == menuScreen && c == log) {
             Thread thr = new Thread(this);
             thr.start();
         } else if (c == this.styleLines) {
-            
-            Thread  thr= new Thread(new Runnable() {
+
+            Thread thr = new Thread(new Runnable() {
                 public void run() {
                     //#style lineChart
                     updateChart();
@@ -342,8 +448,8 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
             });
             thr.start();
         } else if (c == this.styleVerticalBar) {
-           
-            Thread  thr= new Thread(new Runnable() {
+
+            Thread thr = new Thread(new Runnable() {
                 public void run() {
                     //#style verticalBarChart
                     updateChart();
@@ -351,14 +457,37 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
             });
             thr.start();
         } else if (c == this.stylePieChart) {
-            
-           Thread  thr= new Thread(new Runnable() {
+
+            Thread thr = new Thread(new Runnable() {
                 public void run() {
                     //#style pieChart
                     updateChart();
                 }
             });
             thr.start();
+        } else if (disp == mProfil && c == submit) {
+            Thread thr = new Thread(new Runnable() {
+
+                public void run() {
+                    try {
+                        me.setAdress(adresse.getText());
+                        me.setLogin(login.getText());
+                        me.setPrenom(prenom.getText());
+                        me.setPrenom(nom.getText());
+                        me.setSexe(sexe.getString(sexe.getSelectedIndex()).charAt(0));
+                        UtilisateurPost uPost = new UtilisateurPost(me, 'U');
+                        uPost.start();
+                        uPost.join();
+                        Alert alert = new Alert("succee de modification", "modification effectuee avec succes", null, AlertType.INFO);
+                        d.setCurrent(alert);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
+            thr.start();
+        } else if (disp == listReclamations && c == select) {
+                
         }
     }
     /*
@@ -462,7 +591,7 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
         chart3.setLabelX("domaines");
         chart3.setLabelY("reclamations");
         this.StatForm.append(chart3);
-       
+
     }
 
 }
