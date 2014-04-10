@@ -40,7 +40,6 @@ public class UtilisateurHandler extends DefaultHandler implements Runnable {
     String typeTag = "close";
     int idUtilisateur;
 
-    ;
     
     public UtilisateurHandler(int idUtilisateur) {
         try {

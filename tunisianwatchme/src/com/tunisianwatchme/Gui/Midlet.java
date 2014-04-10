@@ -12,6 +12,8 @@ import com.tunisianwatchme.Handler.LieuHandler;
 import com.tunisianwatchme.Handler.LoginHandler;
 import com.tunisianwatchme.Handler.ReclamationHandler;
 import com.tunisianwatchme.Handler.StatHandler;
+import com.tunisianwatchme.Handler.UtilisateurHandler;
+import com.tunisianwatchme.Post.EmailPost;
 import com.tunisianwatchme.Post.ReclamationPost;
 import com.tunisianwatchme.Post.UtilisateurPost;
 import de.enough.polish.ui.ChartItem;
@@ -74,6 +76,7 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
     StringItem img2 = new StringItem("", "                                                                            ", Item.LAYOUT_TOP);
     StringItem fluxReclamationItem = new StringItem("", "                                                                            ", Item.BUTTON);
     StringItem ajoutReclamationItem = new StringItem("", "                                                                            ", Item.BUTTON);
+    StringItem mailItem = new StringItem("", "                                                                            ", Item.BUTTON);
     StringItem profilItem = new StringItem("", "                                                                            ", Item.BUTTON);
     StringItem StatItem = new StringItem("", "                                                                            ", Item.BUTTON);
 
@@ -96,7 +99,6 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
     StringItem domaineReclamation = new StringItem("domaine", "");
     StringItem lieuReclamation = new StringItem("lieu", "");
     Vector imagesReclamation = new Vector();
-    
 
     private Form StatForm;
     private Command styleLines = new Command("Lines", Command.SCREEN, 1);
@@ -108,6 +110,7 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
     DomaineHandler dh;
     LieuHandler lh;
     ReclamationHandler rh;
+    UtilisateurHandler uh;
 
     TextField nom = new TextField("Nom :", null, 30, TextField.ANY);
     TextField prenom = new TextField("Prenom :", null, 30, TextField.ANY);
@@ -116,6 +119,11 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
     TextField email = new TextField("Email :", null, 30, TextField.EMAILADDR);
     DateField dateP = new DateField("Date : ", DateField.DATE, TimeZone.getDefault());
     TextField adresse = new TextField("Adresse :", null, 30, TextField.ANY);
+
+    Form mailForm;
+    ChoiceGroup lisrResp = new ChoiceGroup("Utilisateur", ChoiceGroup.EXCLUSIVE);
+    TextField sujetMail = new TextField("Sujet", "", 50, TextField.ANY);
+    TextField msgMail = new TextField("Méssage", "", 50, TextField.ANY);
 
     public Midlet() {
         super();
@@ -132,6 +140,12 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
         ajoutReclamationItem.setItemCommandListener(this);
         profilItem.addCommand(select);
         profilItem.setItemCommandListener(this);
+
+        StatItem.addCommand(select);
+        StatItem.setItemCommandListener(this);
+
+        mailItem.addCommand(select);
+        mailItem.setItemCommandListener(this);
 
         this.menuScreen = new Form("");
         //#style mainScreen
@@ -175,6 +189,9 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
         profil.append(StatItem);
         //#style flux2
         profil.append(profilItem);
+
+        //#style flux
+        profil.append(mailItem);
 
         profil.setCommandListener(this);
         profil.addCommand(this.logout);
@@ -282,6 +299,14 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
         infoReclamation.append(domaineReclamation);
         infoReclamation.addCommand(cancel);
 
+        //interface de mail
+        mailForm = new Form("");
+        mailForm.append(lisrResp);
+        mailForm.append(sujetMail);
+        mailForm.append(msgMail);
+        mailForm.addCommand(submit);
+        mailForm.addCommand(cancel);
+        mailForm.setCommandListener(this);
     }
 
     protected void startApp() throws MIDletStateChangeException {
@@ -318,6 +343,20 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
         } else if (item == this.ajoutReclamationItem && cmd == this.select) {
             type = "ajout";
             Thread thr = new Thread(this);
+            thr.start();
+        } else if (item == mailItem && cmd == this.select) {
+            Thread thr = new Thread(new Runnable() {
+
+                public void run() {
+                    uh = new UtilisateurHandler(0);
+                    for (int i = 0; i < uh.getUtilisateurVector().size(); i++) {
+                        Utilisateur resp = (Utilisateur) uh.getUtilisateurVector().elementAt(i);
+                        lisrResp.append(resp.getNom(), null);
+                    }
+                    d.setCurrent(mailForm);
+                }
+            });
+
             thr.start();
         } else if (item == this.StatItem && cmd == this.select) {
             Thread thr = new Thread(this);
@@ -487,16 +526,44 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
                     dateReclamation.setText(reclamation.getDate());
                     heureReclamation.setText(reclamation.getHeure());
                     lieuReclamation.setText(reclamation.getLieu().toString());
-                   // String url =(String) reclamation.getListDocument().elementAt(0);
+                    // String url =(String) reclamation.getListDocument().elementAt(0);
                     //img = new DocumentHandler(url).getImg();
                     break;
                 }
             }
-            if(img!=null)
-            infoReclamation.append(img);
+            if (img != null) {
+                infoReclamation.append(img);
+            }
             d.setCurrent(infoReclamation);
+        } else if (disp == mailForm && c == submit) {
+            System.out.println("aaa");
+           //if (!sujetMail.getText().equals("") && !msgMail.getText().equals("")) {
+                for (int i = 0; i < uh.getUtilisateurVector().size(); i++) {
+                   user = (Utilisateur) uh.getUtilisateurVector().elementAt(i);
+                    if(user.getNom().equals(lisrResp.getString(lisrResp.getSelectedIndex())))
+                    {
+                        Thread thr = new Thread(new Runnable() {
+
+                            public void run() {
+                                try {
+                                    EmailPost emailPost = new EmailPost(sujetMail.getText(), msgMail.getText(), user.getMail());
+                                    emailPost.start();
+                                    emailPost.join();
+                                } catch (InterruptedException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        });
+                        
+                        thr.start();
+                        break;
+                    }
+                }
+           // }
         }
     }
+    
+    Utilisateur user;
 
     private void updateChart() {
         //#style lineChart
