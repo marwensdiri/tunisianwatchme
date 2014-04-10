@@ -22,8 +22,8 @@ public class Reclamation {
         
     }
     
-    public void addDoc(int id){
-        listDocument.addElement(new Integer(id));
+    public void addDoc(String url){
+        listDocument.addElement(url);
     }
     
     public Vector getListCommentaire() {

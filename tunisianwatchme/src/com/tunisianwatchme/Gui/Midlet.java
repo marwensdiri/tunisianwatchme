@@ -6,6 +6,7 @@ import com.tunisianwatchme.Entity.Lieu;
 import com.tunisianwatchme.Entity.Reclamation;
 import com.tunisianwatchme.Entity.Stat;
 import com.tunisianwatchme.Entity.Utilisateur;
+import com.tunisianwatchme.Handler.DocumentHandler;
 import com.tunisianwatchme.Handler.DomaineHandler;
 import com.tunisianwatchme.Handler.LieuHandler;
 import com.tunisianwatchme.Handler.LoginHandler;
@@ -27,6 +28,7 @@ import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
+import javax.microedition.lcdui.Image;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
@@ -89,9 +91,12 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
     StringItem titreReclamation = new StringItem("titre", "");
     StringItem descriptionReclamation = new StringItem("description", "");
     StringItem dateReclamation = new StringItem("date", "");
+    StringItem heureReclamation = new StringItem("heure", "");
     StringItem citoyenReclamation = new StringItem("citoyen", "");
     StringItem domaineReclamation = new StringItem("domaine", "");
     StringItem lieuReclamation = new StringItem("lieu", "");
+    Vector imagesReclamation = new Vector();
+    
 
     private Form StatForm;
     private Command styleLines = new Command("Lines", Command.SCREEN, 1);
@@ -262,7 +267,7 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
 
         //interface de la liste des réclamations
         listReclamations = new List("", List.IMPLICIT);
-        listReclamations.addCommand(select);
+        //listReclamations.addCommand(select);
         listReclamations.addCommand(cancel);
         listReclamations.setCommandListener(this);
 
@@ -273,10 +278,10 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
         infoReclamation.append(lieuReclamation);
         infoReclamation.append(citoyenReclamation);
         infoReclamation.append(dateReclamation);
+        infoReclamation.append(heureReclamation);
         infoReclamation.append(domaineReclamation);
-        
         infoReclamation.addCommand(cancel);
-        
+
     }
 
     protected void startApp() throws MIDletStateChangeException {
@@ -342,27 +347,8 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
                 }
             });
             thr.start();
-
             d.setCurrent(mProfil);
         }
-        /*............................................................if (d.getCurrent() == this.menuScreen && cmd == this.cmdQuit) {
-         notifyDestroyed();
-         }
-         if (d.getCurrent() == this.profil && cmd == this.cmdQuit) {
-         d.setCurrent(menuScreen);
-         }
-
-         if (d.getCurrent() == this.profil && cmd == this.logout) {
-         d.setCurrent(menuScreen);
-         }
-         if (d.getCurrent() == this.profil && cmd == this.test) {
-
-         d.setCurrent(ajout);
-         }
-         if (d.getCurrent() == this.ajout && cmd == this.cancel) {
-
-         d.setCurrent(profil);
-         }*/
     }
 
     public void run() {
@@ -486,55 +472,31 @@ public class Midlet extends MIDlet implements CommandListener, ItemCommandListen
                 }
             });
             thr.start();
-        } else if (disp == listReclamations && c == select) {
-                
+        } else if (disp == listReclamations && c == List.SELECT_COMMAND) {
+            Image img = null;
+            for (int i = 0; i < rh.getReclamation().size(); i++) {
+                Reclamation reclamation = (Reclamation) rh.getReclamation().elementAt(i);
+                if (listReclamations.getString(listReclamations.getSelectedIndex()).equals(reclamation.toString())) {
+                    if (reclamation.getCitoyen() != null) {
+                        citoyenReclamation.setText(reclamation.getCitoyen().toString());
+                    }
+                    titreReclamation.setText(reclamation.getTitre());
+
+                    descriptionReclamation.setText(reclamation.getDescription());
+                    domaineReclamation.setText(reclamation.getDomaine().toString());
+                    dateReclamation.setText(reclamation.getDate());
+                    heureReclamation.setText(reclamation.getHeure());
+                    lieuReclamation.setText(reclamation.getLieu().toString());
+                   // String url =(String) reclamation.getListDocument().elementAt(0);
+                    //img = new DocumentHandler(url).getImg();
+                    break;
+                }
+            }
+            if(img!=null)
+            infoReclamation.append(img);
+            d.setCurrent(infoReclamation);
         }
     }
-    /*
-     class MyCustomItem extends CustomItem{
-
-     int count = 0;
-
-     public MyCustomItem(String label) {
-     super(label);
-     }
-
-     protected void paint(Graphics g, int w, int h) {
-     g.drawString("" + count, 10, 10, Graphics.TOP | Graphics.LEFT);
-     //Paint ur own stuff here
-     }
-
-     protected void keyPressed(int keyCode) {
-     //write ur code here to do stuff
-
-     if (keyCode == -5) {
-     System.out.println("dd");
-     }
-     }
-
-     protected int getMinContentWidth() {
-     return 0;
-
-     }
-
-     protected int getMinContentHeight() {
-     return 0;
-     }
-
-     protected int getPrefContentWidth(int height) {
-     return 0;
-     }
-
-     protected int getPrefContentHeight(int width) {
-     return 0;
-     }
-        
-        
-
-
-
-     }
-     */
 
     private void updateChart() {
         //#style lineChart
